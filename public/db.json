@@ -1,0 +1,31 @@
+{
+  "RECORDS": [
+    {
+      "uid": 1,
+      "title": "Lowdb",
+      "count": 1
+    },
+    {
+      "uid": 2,
+      "user": {
+        "name": "typicode",
+        "age": 18
+      }
+    },
+    {
+      "uid": 4,
+      "name": "xxx",
+      "info": "新纪录"
+    },
+    {
+      "uid": 4,
+      "name": "xxx",
+      "info": "新纪录"
+    },
+    {
+      "uid": 4,
+      "name": "xxx",
+      "info": "新纪录"
+    }
+  ]
+}
