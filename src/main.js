@@ -5,9 +5,9 @@ import store from './store'
 
 import './plugins/element'
 import '@/assets/style/global.scss'
-
+import db from '@/utils/datastore.js'
 Vue.config.productionTip = false
-
+Vue.use(db)
 new Vue({
   router,
   store,

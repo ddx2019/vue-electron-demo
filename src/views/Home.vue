@@ -1,19 +1,21 @@
 <template>
   <div class="home">
-    <nav-header></nav-header>
+   <h1>Home</h1>
+   <lowdb-test></lowdb-test>
   </div>
 </template>
 
 <script>
-import NavHeader from '../components/header/index.vue'
+import LowdbTest from '@/views/test/LowdbTest.vue'
 export default {
   name: 'Home',
   components: {
-    NavHeader
+    LowdbTest
   }
 }
 </script>
 <style lang="scss">
   .home{
+
   }
 </style>

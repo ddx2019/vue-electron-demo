@@ -1,0 +1,16 @@
+{
+  "RECORDS": [
+    {
+      "uid": 2,
+      "user": {
+        "name": "typicode",
+        "age": 18
+      }
+    },
+    {
+      "uid": 4,
+      "name": "xxx",
+      "info": "新纪录"
+    }
+  ]
+}

@@ -7,6 +7,7 @@
             <span>网易云音乐</span>
         </div>
       </el-col>
+
       <el-col :span="11" >
         <div class="search_outside">
          <span class="el-icon-arrow-left arrow arrow_active"></span>
@@ -41,6 +42,7 @@ export default {
   data () {
     return {
       keyWord: '搜索音乐，视频，歌词，电台'
+
     }
   },
   methods: {
