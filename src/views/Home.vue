@@ -1,21 +1,18 @@
 <template>
   <div class="home">
    <h1>Home</h1>
-   <lowdb-test></lowdb-test>
+
+<free-table></free-table>
   </div>
 </template>
 
 <script>
-import LowdbTest from '@/views/test/LowdbTest.vue'
+
+import FreeTable from '@/views/test/FreeTable.vue'
 export default {
   name: 'Home',
   components: {
-    LowdbTest
+    FreeTable
   }
 }
 </script>
-<style lang="scss">
-  .home{
-
-  }
-</style>
