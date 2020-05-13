@@ -1,35 +1,26 @@
 <template>
     <div class="area-choose">
-        <el-button @click="dialogVisible = true">显示弹框</el-button>
+        <el-button @click="handleShowDialog">显示弹框</el-button>
         <el-dialog
             title="选择区域"
             :visible.sync="dialogVisible"
             width="40%"
            :close-on-click-modal="false"
+           :destroy-on-close="true"
            >
             <div class="area_outside" v-for="(all,key,i) in res.data" :key="i">
                 <div class="area_all">
-                    <el-checkbox :indeterminate="all.isIndeterminate" v-model="all.checkAll" @change="handleCheckAllChange">
+                    <el-checkbox :indeterminate="all.isIndeterminate" v-model="all.checkAll" @change="handleCheckAllChange(all.checkAll,all.name)">
                         {{all.name}}
                     </el-checkbox>
                 </div>
-                <!-- <div class="area_province" v-for="(province,key,i) in all.childer" :key="i"> -->
+
                     <el-checkbox-group v-model="CheckedProvince" @change="handleCheckedProvinceChange">
                         <el-checkbox v-for="(province,key,i) in all.childer" :key="i" :label="province.name"  :indeterminate="province.isIndeterminate"  v-model="province.checkAll">
                           {{province.name}}
                            <i @click="handleCaret" style="color:red;" class="el-icon-caret-bottom"></i>
                         </el-checkbox>
-                      <!-- <el-checkbox  :indeterminate="province.isIndeterminate"  v-model="province.checkAll" @click="handleProvince(province)" >
-                          {{province.name}}
-                          <i @click="handleCaret" style="color:red;" class="el-icon-caret-bottom"></i>
-                      </el-checkbox> -->
                     </el-checkbox-group>
-                    <!-- <div v-for="(city,key,i) in province.childer" :key="i">
-                        <el-checkbox>
-                            {{city.name}}
-                        </el-checkbox>
-                    </div> -->
-                <!-- </div> -->
             </div>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
@@ -635,9 +626,35 @@ export default {
     this.handleData()
   },
   methods: {
-    handleCheckAllChange (val) {
+    handleShowDialog () {
+      this.dialogVisible = true
+      this.handleData()
+    },
+    handleCheckAllChange (val, name) {
       // 只有点击全选的时候，它的val才会为true或者false，val为true,将原来的所有数据复制给group里的checkProvinces,否则将[]空数组赋值给checkProvinces
-      console.log(val)
+      console.log('val', val, name)
+      const provinces = []
+      const city = []
+      if (val) {
+        for (const item in this.res.data) {
+          const result = this.res.data[item]
+          if (name === result.name) {
+            for (const child in result.childer) {
+              const myobj = (result.childer)[child]
+              this.$set(myobj, 'checkAll', true)
+              provinces.push(myobj.name)
+
+              for (const data in myobj.childer) {
+                this.$set((myobj.childer)[data], 'checkAll', true)
+                city.push((myobj.childer)[data].name)
+              }
+            }
+          }
+        }
+        this.CheckedProvince = provinces.slice()
+        this.$forceUpdate()
+        console.log(this.CheckedProvince, 'province')
+      }
       this.CheckedProvince = val ? ProvinceOptions : []
       this.isIndeterminate = false // 但凡点了全选，都是确定状态，要么全选，要么不全选，故此时不确定状态isIndeterminate为false。
     },
@@ -649,9 +666,7 @@ export default {
     },
     handleData () {
       const data = this.res.data
-      // const allArea = []
       for (var i in data) {
-        // allArea.push(data[i].name)
         this.$set(data[i], 'checkAll', false)
         this.$set(data[i], 'isIndeterminate', false)
         for (var j in data[i].childer) {
