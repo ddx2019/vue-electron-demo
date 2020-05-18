@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .dots {
+            width: 3.5em;
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .loading-dots {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .dots div {
+            width: 0.4em;
+            height: 0.4em;
+            border-radius: 50%;
+            background-color: #666666;
+            animation: fade 0.8s ease-in-out alternate infinite;
+        }
+
+        .dots div:nth-of-type(1) {
+            animation-delay: -1.2s;
+        }
+
+        .dots div:nth-of-type(2) {
+            animation-delay: -1s;
+        }
+
+        .dots div:nth-of-type(3) {
+            animation-delay: -0.8s;
+        }
+
+        .dots div:nth-of-type(4) {
+            animation-delay: -0.6s;
+        }
+
+        .dots div:nth-of-type(5) {
+            animation-delay: -0.4s;
+        }
+
+        .dots div:nth-of-type(6) {
+            animation-delay: -0.2s;
+        }
+
+        @keyframes fade {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        .electron-loading {
+            width: 360px;
+            height: 360px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto auto;
+
+        }
+
+        .electron-logos {
+            width: 100px;
+            height: 100px;
+
+        }
+
+        .electron-logos img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .electron-warps-hei {
+            height: 240px;
+            background: url("./loading/loadbg.png") no-repeat;
+            background-size: contain;
+        }
+
+        .electron-warps {
+            display: flex;
+            justify-content: center;
+            padding-top: 42px;
+        }
+
+        .electron-fonts::before {
+            content: "";
+            height: 85px;
+            display: inline-block;
+        }
+
+        .vae {
+            margin-bottom: 8px;
+        }
+        .cpy{
+            font-size:12px;
+            text-align: center;
+            width: 100%;
+            bottom: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="electron-loading">
+        <div class="electron-warps-hei">
+            <div class="electron-warps">
+               
+                <div class="electron-logos">
+                    <img src="./loading/wyy.png">
+                </div>
+                
+                <div class="electron-fonts">
+                    <div class="vae">网易云音乐</div>
+                    <div>NetEase Cloud Music</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 加载loading界面 -->
+        <div class="loading-dots">
+            <div class="dots">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+
+        <!-- 版权所有 -->
+        <div class="cpy loading-dots">Copyright  @ddx All rights reserved</div>
+    </div>
+</body>
+
+</html>

@@ -50,7 +50,8 @@ module.exports = {
         "semi":"off",
         "object-curly-spacing":"off",
         "eol-last":"off",
-        "padded-blocks":"off"
+        "padded-blocks":"off",
+        "no-unused-vars":"off",
   }
 
 }

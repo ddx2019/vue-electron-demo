@@ -8,29 +8,28 @@
         </div>
       </el-col>
 
-      <el-col :span="11" >
+      <el-col :span="7" >
         <div class="search_outside">
-         <span class="el-icon-arrow-left arrow arrow_active"></span>
-         <span class="el-icon-arrow-right arrow"></span>
-         <input ref="search" class="search_input"  v-model="keyWord" type="text" @focus="handleFocus" @blur="handleBlur"/>
+         <span class="el-icon-arrow-left arrow" :class="{' arrow_active':arrow}" @click="handleClickArrow('left')"></span>
+         <span class="el-icon-arrow-right arrow" :class="{' arrow_active':!arrow}" @click="handleClickArrow('right')"></span>
+         <input ref="search" class="search_input"  v-model="searchKey" type="text" @focus="handleFocus" @blur="handleBlur"/>
          <i class="el-icon-search"></i>
         </div>
       </el-col>
-      <el-col :span="9">
+      <el-col :span="13">
         <div class="personal_outside" >
-          <i class="el-icon-user"></i>
-          <div class="text_loginstatus">未登录</div>
-          <span class="el-icon-caret-bottom"></span>
-          <div class="text_VIP" >开通VIP</div>
-          <span class="el-icon-shopping-bag-2"></span>
-          <span class="el-icon-message"></span>
-          <span class="el-icon-setting"></span>
-           <strong>|</strong>
-          <span class="el-icon-edit-outline"></span>
-          <span class="el-icon-minus"></span>
-          <span class="el-icon-full-screen"></span>
-          <span class="el-icon-close"></span>
-
+            <i class="el-icon-user"></i>
+            <div class="text_loginstatus">未登录</div>
+            <span class="el-icon-caret-bottom"></span>
+            <div class="text_VIP" >开通VIP</div>
+            <span class="el-icon-shopping-bag-2"></span>
+            <span class="el-icon-message"></span>
+            <span class="el-icon-setting"></span>
+            <strong>|</strong>
+            <span class="el-icon-edit-outline"></span>
+            <span class="el-icon-minus"></span>
+            <span class="el-icon-full-screen"></span>
+            <span class="el-icon-close"></span>
         </div>
       </el-col>
     </el-row>
@@ -41,16 +40,23 @@
 export default {
   data () {
     return {
-      keyWord: '搜索音乐，视频，歌词，电台'
-
+      searchKey: '搜索音乐，视频，歌词，电台',
+      arrow:true
     }
   },
   methods: {
     handleFocus () {
-      this.keyWord = ''
+      this.searchKey = ''
     },
     handleBlur () {
-      this.keyWord = '搜索音乐，视频，歌词，电台'
+      this.searchKey = '搜索音乐，视频，歌词，电台'
+    },
+    handleClickArrow(arg){
+      if(arg==='left'){
+        this.arrow=true;
+      }else{
+        this.arrow=false;
+      }
     }
   }
 }
@@ -61,25 +67,22 @@ export default {
            border:1px  solid transparent;
            position: relative;
            img{
-               height: 22px;
+               height: 21px;
                border-radius: 50%;
                position: absolute;
-               top:15px;
-               left:15px;
+               top:0;
+               left:10px;
            }
            span{
                display: inline-block;
                position: absolute;
-               top: 50%;
-               left: 42px;
-               font-size: 16px;
+               left: 35px;
+               font-size: 17px;
                letter-spacing: 2px;
            }
        }
       .el-row {
-          margin-bottom: 20px;
-          height: 50px;
-          line-height: 50px;
+          padding: 10px;
           background: #c62f2f;
           color: #fff;
      }
@@ -87,7 +90,6 @@ export default {
       border-radius: 4px;
     }
     .search_outside{
-      padding-left: 22px;
       .arrow{
         border: 1px solid #a82828;
         display: inline-block;
@@ -125,6 +127,7 @@ export default {
 
     }
     .personal_outside{
+      text-align: right;
       color: rgb(221, 220, 220);
       i{
         display: inline-block;
@@ -168,7 +171,6 @@ export default {
       }
       .el-icon-edit-outline,.el-icon-minus,.el-icon-full-screen,.el-icon-close{
         margin-left: 8px;
-
       }
     }
 }

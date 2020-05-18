@@ -12,11 +12,15 @@
     "postuninstall": "electron-builder install-app-deps"
   },
   "main": "background.js",
+  "engines": {
+    "node": ">= v12.13.1"
+  },
   "dependencies": {
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
     "dayjs": "^1.8.26",
     "element-ui": "^2.13.1",
+    "font-awesome": "^4.7.0",
     "lowdb": "^1.0.0",
     "tree-kill": "^1.2.2",
     "vue": "^2.6.11",

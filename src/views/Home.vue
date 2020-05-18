@@ -1,35 +1,42 @@
 <template>
-  <div class="home">
-    <h1>Home</h1>
-<!-- <area-choose></area-choose> -->
-<el-button @click="getHotMusic">获取热门歌曲</el-button>
-    <!-- <optimize-table></optimize-table> -->
-  </div>
+ <div class="home">
+    <nav-header></nav-header>
+   <div class="main-content">
+     <div class="left-container"> 
+       <left-nav></left-nav>
+      </div>
+      <div class="right-container">
+       <top-nav></top-nav>
+        这是右边
+      </div>
+   </div>
+ </div>
 </template>
-
 <script>
-// import AreaChoose from '@/views/test/AreaChoose.vue'
-import {HotMusic} from "@/api/api.js";
-// import axios from "@/plugins/axios.js";
-
-// import optimizeTable from '@/views/test/ElTable/optimizeTable.vue'
-export default {
-  name: 'Home',
-  components: {
-    // optimizeTable
-    // AreaChoose
-  },
-  
-  methods: {
-    getHotMusic(){
-     HotMusic() 
-        .then(res => {
-          console.log("我拿到的数据：", res)
-        })
-        .catch(err => {
-          console.log(err)
-        })
+import LeftNav from "@/components/nav/LeftNav.vue"
+import NavHeader from '@/components/header'
+import TopNav from "@/components/nav/TopNav.vue"
+  export default {
+    components:{
+      LeftNav,
+      NavHeader,
+      TopNav
     }
-  } 
-}
+  }
 </script>
+<style lang="scss">
+  .home{
+   .main-content{
+      display: flex;
+      .left-container{
+        width: 200px;
+        // background: #f5f5f7;
+      }
+      .right-container{
+        flex: auto;
+        border: 1px solid green;
+      }
+   }
+
+  }
+</style>

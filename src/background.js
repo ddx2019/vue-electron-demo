@@ -1,5 +1,3 @@
-
-
 import { app, protocol, BrowserWindow, shell } from 'electron'
 import {
   createProtocol
@@ -56,7 +54,6 @@ if(isDevelopment){
   })
 }
 
-
 app.on('ready', async () => {
   if (isDevelopment && !process.env.IS_TEST) {
 
@@ -64,8 +61,8 @@ app.on('ready', async () => {
   createWindow()
 })
 
+//启动本项目中的服务器
 function startServer(){
-
 let cmdStr="node app.js" // 要运行的命令 
 let serverPath=isDevelopment?"server":"../server" // 注意开发环境和线上环境的路径不同；
 runExec(cmdStr)
@@ -85,6 +82,7 @@ function runExec(cmdStr){
 }
 }
 
+// 关闭项目中的所有进程，主要是为了关闭刚刚启动的服务器进程。
 function stopServer(){
   console.log("Kill server process.....")
   const kill=require('tree-kill'); //  tree-kill是一个插件，需要安装，在项目中已经用 yarn add tree-kill 命令安装。
