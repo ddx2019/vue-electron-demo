@@ -1,4 +1,4 @@
-import { app, protocol, BrowserWindow, shell } from 'electron'
+import { app, protocol, BrowserWindow, shell,ipcMain } from 'electron'
 import {
   createProtocol
 } from 'vue-cli-plugin-electron-builder/lib'
@@ -13,13 +13,16 @@ function createWindow () {
   win = new BrowserWindow({
     width: 1024,
     height: 670,
+    frame:false,// 关闭window自带的关闭等功能以及工具栏， 无边框窗口是不允许拖动的，可通过设置样式让其可拖动，样式见index.html中
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      webSecurity: false //允许跨域
     }
   })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
+    // 开启渲染进程中的调试模式
     if (!process.env.IS_TEST) win.webContents.openDevTools()
   } else {
     createProtocol('app')
@@ -35,6 +38,28 @@ function createWindow () {
   })
 }
 
+// 窗口 最小化
+ipcMain.on('window-min',function(){ // 收到渲染进程的窗口最小化操作的通知，并调用窗口最小化函数，执行该操作
+  win.minimize();
+})
+
+// 窗口 最大化、恢复
+ipcMain.on('window-max',function () {
+  if(win.isMaximized()){
+    win.restore();
+  }else{
+    win.maximize();
+  }
+})
+
+// 关闭窗口
+ipcMain.on('window-close',function (){
+  win.close();
+})
+
+
+
+// 所有窗口都关闭的时候触发，windows和Linux中，此时应用也应退出。
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
@@ -49,6 +74,7 @@ app.on('activate', () => {
 
 
 if(isDevelopment){
+  // electron完成初始化的时候触发
   app.on('ready',async ()=>{
    startServer(); // 启动服务器
   })
@@ -97,6 +123,9 @@ function stopServer(){
 }
 
 app.stopServer=stopServer;
+
+
+
 
 if (isDevelopment) {
   

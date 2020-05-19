@@ -1,5 +1,6 @@
 <template>
   <div class="header">
+      <!-- <el-button @click="openEx">打开百度</el-button> -->
     <el-row>
       <el-col :span="4">
         <div class="logo" >
@@ -19,24 +20,26 @@
       <el-col :span="13">
         <div class="personal_outside" >
             <i class="el-icon-user"></i>
-            <div class="text_loginstatus">未登录</div>
+            <span class="text_loginstatus">未登录</span>
             <span class="el-icon-caret-bottom"></span>
-            <div class="text_VIP" >开通VIP</div>
+            <span class="text_VIP" >开通VIP</span>
             <span class="el-icon-shopping-bag-2"></span>
             <span class="el-icon-message"></span>
             <span class="el-icon-setting"></span>
             <strong>|</strong>
             <span class="el-icon-edit-outline"></span>
-            <span class="el-icon-minus"></span>
-            <span class="el-icon-full-screen"></span>
-            <span class="el-icon-close"></span>
+            <span class="el-icon-minus" @click="minimizeWin"></span>
+            <span class="el-icon-full-screen" @click="maximizeWin"></span>
+            <span class="el-icon-close" @click="closeWin"></span>
         </div>
       </el-col>
     </el-row>
+  
   </div>
 
 </template>
 <script>
+import {ipcRenderer, shell} from 'electron';
 export default {
   data () {
     return {
@@ -57,7 +60,20 @@ export default {
       }else{
         this.arrow=false;
       }
+    },
+    minimizeWin(){
+      ipcRenderer.send('window-min') // 通知主进程我要进行窗口最小化操作
+    },
+    maximizeWin(){
+      ipcRenderer.send('window-max')
+    },
+    closeWin(){
+      ipcRenderer.send('window-close')
+    },
+    openEx(){
+      shell.openExternal('https://www.baidu.com')
     }
+
   }
 }
 </script>
@@ -139,10 +155,12 @@ export default {
         text-align: center;
         vertical-align: middle;
          color: rgb(204, 204, 204);
+        
       }
       span{
         font-size: 16px;
         margin-left: 20px;
+        cursor: pointer;
       }
       .el-icon-caret-bottom{
         margin-left: 5px;
