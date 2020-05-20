@@ -13,7 +13,7 @@ function createWindow () {
   win = new BrowserWindow({
     width: 1024,
     height: 670,
-    frame:false,// 关闭window自带的关闭等功能以及工具栏， 无边框窗口是不允许拖动的，可通过设置样式让其可拖动，样式见index.html中
+    // frame:false,// 关闭window自带的关闭等功能以及工具栏， 无边框窗口是不允许拖动的，可通过设置样式让其可拖动，样式见index.html中
     webPreferences: {
       nodeIntegration: true,
       webSecurity: false //允许跨域
