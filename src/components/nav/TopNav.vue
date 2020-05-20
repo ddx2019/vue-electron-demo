@@ -1,13 +1,15 @@
 <template>
 	<div class="top-nav">
 		<el-menu
-		:default-active="activeIndex"
+		:default-active="active"
 		class="el-menu-nav"
 		mode="horizontal"
 		@select="handleSelect"
 		text-color="#333"
-		active-text-color="#c22e2e">
-			<el-menu-item  v-for="(item,index) in navList" :index="`${index}`" :key="item.id" >{{item.name}}</el-menu-item>
+		active-text-color="#c22e2e"
+		:router="true"
+		>
+			<el-menu-item  v-for="(item,index) in navList" :index="item.path"  :key="index">{{item.name}}</el-menu-item>
 		</el-menu>
 
 	</div>
@@ -17,19 +19,20 @@ export default {
 	data(){
 		return {
 			navList:[
-				{name:'个性推荐'},
-				{name:'歌单'},
-				{name:'主播电台'},
-				{name:'排行榜'},
-				{name:'歌手'},
-				{name:'最新音乐'}
-			], 
-			activeIndex:'0'
+				{name:'个性推荐',path:'/'},
+				{name:'歌单',path:'/songs'},
+				{name:'主播电台',path:'/radio'},
+				{name:'排行榜',path:'/rank'},
+				{name:'歌手',path:'/singer'},
+				{name:'最新音乐',path:'/latest'}
+			]
 		}
 	},
+	props:['active'],
 	 methods: {
       handleSelect(key, keyPath) {
-        console.log(key, keyPath);
+		  this.$emit('handleSelect',key)
+        // console.log('key:',key, keyPath);
       }
     }
 }

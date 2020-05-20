@@ -48,15 +48,22 @@ export default {
 		handleClickRecomend(index){
 			this.activeIndex=index;
 			this.activeMusic='';// 让 我的音乐不被选中
+			const names=['/','/FM','/live','/video','/friend']; // 左导航的router的path
+			this.$router.push({path:names[index]})
+
 		},
 		handleClickMyMusic(index){
 			this.activeMusic=index; 
 			this.activeIndex=" " // 让 推荐部分 不被选中 
+			const names=['/local','/download']
+			this.$router.push({path:names[index]})
 			
 		},
 		handleClickLike(info){
 			this.activeIndex='like'
 			this.activeMusic=" " //让 我的音乐 不被选中
+			this.$router.push({path:'/created'})
+
 		}
 	}
 }

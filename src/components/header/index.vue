@@ -2,11 +2,11 @@
   <div class="header">
       <!-- <el-button @click="openEx">打开百度</el-button> -->
     <el-row>
-      <el-col :span="4">
-        <div class="logo" >
+      <el-col :span="4" >
+        <span class="logo" @click="goHome">
             <img src="@/assets/image/wangyiyun.svg">
             <span>网易云音乐</span>
-        </div>
+        </span>
       </el-col>
 
       <el-col :span="7" >
@@ -48,6 +48,11 @@ export default {
     }
   },
   methods: {
+    goHome(){
+    // location.reload();
+     this.$router.push({path:'/'})
+
+    },
     handleFocus () {
       this.searchKey = ''
     },
@@ -82,6 +87,8 @@ export default {
        .logo{
            border:1px  solid transparent;
            position: relative;
+           cursor: pointer;
+           display: block;
            img{
                height: 21px;
                border-radius: 50%;

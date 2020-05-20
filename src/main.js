@@ -8,9 +8,12 @@ import '@/assets/style/global.scss'
 import "font-awesome/css/font-awesome.css"
 
 import db from '@/utils/datastore.js'
+import TopNav from "@/components/nav/TopNav.vue";
 Vue.config.productionTip = false
 Vue.use(db)
 
+// 全局注册组件
+Vue.component('TopNav',TopNav)
 
 new Vue({
   router,
