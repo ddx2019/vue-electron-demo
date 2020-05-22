@@ -22,3 +22,7 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+###若出现stderr:events.js:187   throw er; // Unhandled 'error' event等错误或警告，
+
+参考：https://peterthaleikis.com/posts/how-to-fix-throw-er-unhandled-error-event.html
