@@ -6,6 +6,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 
 let win
 let serverProcess=null;
+let loading;
 protocol.registerSchemesAsPrivileged([{ scheme: 'app', privileges: { secure: true, standard: true } }])
 
 
@@ -13,6 +14,7 @@ function createWindow () {
   win = new BrowserWindow({
     width: 1024,
     height: 670,
+    show:false, // 一开始是false,loadpage加载完毕的时候为true
     // frame:false,// 关闭window自带的关闭等功能以及工具栏， 无边框窗口是不允许拖动的，可通过设置样式让其可拖动，样式见index.html中
     webPreferences: {
       nodeIntegration: true,
@@ -21,21 +23,53 @@ function createWindow () {
   })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
-    win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
+    setTimeout(() => { //关闭loadpage的时候，将win, show true
+      loading.hide();
+      loading.close();
+      win.show();
+      win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
+    }, 5000);
     // 开启渲染进程中的调试模式
     if (!process.env.IS_TEST) win.webContents.openDevTools()
   } else {
-    createProtocol('app')
-    win.loadURL('app://./index.html')
+    setTimeout(() => {
+     loading.hide();
+     loading.close();
+     win.show();
+     createProtocol('app');
+     win.loadURL('app://./index.html') 
+    }, 5000);
   }
 
   win.on('closed', () => {
-    win = null
+    win = null;
+    app.quit();
   })
 
   win.on('close',function(event){
+    // 关闭前差一个弹窗，询问是否退出程序 *************；
     stopServer(); //停止后台服务
+
   })
+}
+
+
+function showLoading(callback){
+  loading=new BrowserWindow({
+    show:false,
+    frame:false,
+    width:360,
+    height:360,
+    resizable:false
+  })
+  loading.once('show',callback)
+  loading.loadURL(`file://${__static}/loadpage.html`)
+  loading.show();
+}
+
+
+function initApp(){
+  showLoading(createWindow)
 }
 
 // 窗口 最小化
@@ -68,7 +102,7 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
   if (win === null) {
-    createWindow()
+    initApp();
   }
 })
 
@@ -76,26 +110,50 @@ app.on('activate', () => {
 if(isDevelopment){
   // electron完成初始化的时候触发
   app.on('ready',async ()=>{
-   startServer(); // 启动服务器
+    installDependent();
+    startServer(); // 启动服务器
+    initApp();
+  
   })
+}else{
+  //限制只能开启一个应用(4.0以上版本)；
+  //当第二个实例被执行并且调用 app.requestSingleInstanceLock() 时，这个事件将在你的应用程序的首个实例中触发
+  const goTheLock=app.requestSingleInstanceLock();
+  if(!goTheLock){
+    app.quit();
+  }else{
+    app.on('second-instance',(event,commandLine,workingDirectory)=>{
+      if(win){
+        if (win.isMinimized()) win.restore()
+        win.focus()
+      }
+    })
+    app.on('ready', async () => {
+      installDependent();
+      startServer();
+      initApp(); 
+    })
+  }
 }
 
-app.on('ready', async () => {
-  if (isDevelopment && !process.env.IS_TEST) {
-
-  }
-  createWindow()
-})
+function installDependent(){
+  let serverPath=isDevelopment?"server":"../server" // 注意开发环境和线上环境的路径不同；
+  serverProcess=require('child_process').exec('yarn install',{cwd:serverPath})
+  console.log("安装依赖模块")
+}
 
 //启动本项目中的服务器
 function startServer(){
 let cmdStr="node app.js" // 要运行的命令 
 let serverPath=isDevelopment?"server":"../server" // 注意开发环境和线上环境的路径不同；
+// serverProcess=require('child_process').exec(cmdStr,{cwd:serverPath})
+// cmdStr='node app.js'
 runExec(cmdStr)
 
 function runExec(cmdStr){
   //exec 函数 第一个参数是要执行的命令，第二个函数是配置选项，第三个参数是回调函数，配置项中常用到 子进程的工作目录
   serverProcess=require('child_process').exec(cmdStr,{cwd:serverPath})
+  
   serverProcess.stdout.on('data',function(data){  
     console.log("启动服务器成功 stdout:"+data)// 打印正常的后台可执行程序输出
   })

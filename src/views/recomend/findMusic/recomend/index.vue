@@ -7,6 +7,13 @@
 				<h3 class="medium">{{ item }}</h3>
 			</el-carousel-item>
 		</el-carousel>
+		<h3>推荐歌单</h3>
+		<ul >
+			<li class="recomend-card">
+				<img src="" alt="加载失败">
+				<div>每日歌曲推荐</div>
+			</li>
+		</ul>
 	</div>
 </template>
 <script>
@@ -35,7 +42,6 @@ export default{
 </script>
 <style lang="scss">
 .personal-recomend{
-
 
 	.el-carousel__item {
 		h3{

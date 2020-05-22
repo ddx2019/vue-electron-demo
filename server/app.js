@@ -82,7 +82,7 @@ fs.readdirSync(path.join(__dirname, 'module')).reverse().forEach(file => {
   })
 })
 
-const port = process.env.PORT || 8099
+const port = process.env.PORT || 9999
 const host = process.env.HOST || ''
 
 app.server = app.listen(port, host, () => {
