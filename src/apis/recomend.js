@@ -1,11 +1,18 @@
 import axios from '@/plugins/axios.js'
 
-export  function RecomendList(){
+export  function RecomendList(limit){
 	return axios({
 		url:'/personalized',
 		method:'post',
 		data:{
-			limit:30
+			limit:limit
 		}
+	})
+}
+
+export function recomendNewSong(){
+	return axios({
+		url:'/personalized/newsong',
+		method:'post'
 	})
 }

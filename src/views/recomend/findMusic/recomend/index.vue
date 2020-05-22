@@ -1,63 +1,122 @@
 <template>
 	<div class="personal-recomend">
 		<top-nav @handleSelect="handleSelect" :active="active"></top-nav>
-		<h1>个性推荐</h1>
-		 <el-carousel :interval="4000" type="card"  height="200px" >
-			<el-carousel-item v-for="item in 6" :key="item">
-				<h3 class="medium">{{ item }}</h3>
+		<el-carousel :interval="4000" type="card" height="210px" >
+			<el-carousel-item v-for="item in carouseList" :key="item.id">
+				<el-image class="carousel-img" :src="item.picUrl" alt="图片开小差了 ^_^"  fit="cover" />
 			</el-carousel-item>
 		</el-carousel>
-		<h3>推荐歌单</h3>
-		<ul >
-			<li class="recomend-card">
-				<img src="" alt="加载失败">
-				<div>每日歌曲推荐</div>
+		<p class="common-font">
+			<span>推荐歌单</span>
+			<span class="see-more">更多></span>
+		</p>
+		<ul class="card-container">
+			<li class="recomend-card" v-for="item in recomendList" :key="item.id">
+				<el-image :src="item.picUrl" alt="图片开小差了 ^_^"  fit="fill"/>
+				<p class="img-title">{{item.name}}</p>
 			</li>
 		</ul>
 	</div>
 </template>
 <script>
-import {RecomendList}from '@/apis/recomend.js'
+import {RecomendList,recomendNewSong}from '@/apis/recomend.js'
 export default{
 	data(){
 		return {
-			active:'/'
+			active:'/',
+			carouseList:[],
+			recomendList:[]
+		
 		}
 	},
 	methods:{
-			handleSelect(key){
-				// this.active=key;
-			}
+		handleSelect(key){
+		// this.active=key;
 		},
+		getNewSong(){
+			recomendNewSong()
+			.then(res => {
+				this.carouseList=res.data.result.slice(0,9)
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		},
+		getRecomendList(){
+			RecomendList(10)
+			.then(res => {
+				this.recomendList=res.data.result.slice()
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		}
+	},
 	mounted(){
-		RecomendList()
-		.then(res => {
-			console.log(res,"推荐歌曲列表")
-		})
-		.catch(err => {
-			console.log(err)
-		})
+		this.getNewSong();
+		this.getRecomendList();
 	}
-	}
+}
 </script>
 <style lang="scss">
 .personal-recomend{
-
-	.el-carousel__item {
-		h3{
-			color: #475669;
-			font-size: 14px;
-			opacity: 0.75;
-			line-height: 200px;
-			margin: 0;
-			min-width: 540px;
-			
+	.el-carousel{
+		margin:20px auto;
+	}
+	.carousel-img{
+		width: auto;
+		height: 200px;
+	}
+	.common-font{
+		display: flex;
+		justify-content: space-between;
+		border-bottom: 1px solid #e6e6e6;
+		align-items: center;
+		padding-bottom: 8px;
+		span{
+			font-size: 18px;
+			letter-spacing: 0.6px;
+			font-weight: 400;
+			color: #333;
 		}
-		&:nth-child(2n){
-			background-color: #99a9bf;
+		.see-more{
+			font-size: 12px;
+			color: #555;
 		}
-		&:nth-child(2n+1){
-			background-color: #d3dce6;
+	}
+	
+	.card-container{
+		list-style:none;
+		text-align: center;
+		cursor: pointer;
+	}
+	.img-title{
+		font-size: 13px;
+		letter-spacing: 1px;
+		color: #333;
+	}
+	.recomend-card{
+		display: inline-block;
+		vertical-align: top;
+		margin:12px 20px 30px 0;
+		text-align: left;	
+	}
+	@media screen and (min-width: 1032px) { // 最大屏时
+		.recomend-card{
+			width: 200px;
+			.el-image{
+				width: 200px;
+				height: 200px;
+			}	
+		}
+	}
+	@media screen and (max-width: 1030px) { // 最小屏时
+		.recomend-card{
+			width:140px;
+			.el-image{
+				width: 140px;
+				height: 140px;
+			}	
 		}
 	}
 }

@@ -12,7 +12,7 @@ protocol.registerSchemesAsPrivileged([{ scheme: 'app', privileges: { secure: tru
 
 function createWindow () {
   win = new BrowserWindow({
-    width: 1024,
+    width: 1032,
     height: 670,
     show:false, // 一开始是false,loadpage加载完毕的时候为true
     // frame:false,// 关闭window自带的关闭等功能以及工具栏， 无边框窗口是不允许拖动的，可通过设置样式让其可拖动，样式见index.html中
@@ -63,7 +63,7 @@ function showLoading(callback){
     resizable:false
   })
   loading.once('show',callback)
-  loading.loadURL(`file://${__static}/loadpage.html`)
+  loading.loadURL(`file://${__static}/loadpage.html`) // 将loadpage作为加载页面，该页面存在项目的public文件夹下
   loading.show();
 }
 
@@ -110,7 +110,7 @@ app.on('activate', () => {
 if(isDevelopment){
   // electron完成初始化的时候触发
   app.on('ready',async ()=>{
-    installDependent();
+   
     startServer(); // 启动服务器
     initApp();
   
@@ -129,25 +129,20 @@ if(isDevelopment){
       }
     })
     app.on('ready', async () => {
-      installDependent();
       startServer();
       initApp(); 
     })
   }
 }
 
-function installDependent(){
-  let serverPath=isDevelopment?"server":"../server" // 注意开发环境和线上环境的路径不同；
-  serverProcess=require('child_process').exec('yarn install',{cwd:serverPath})
-  console.log("安装依赖模块")
-}
-
 //启动本项目中的服务器
 function startServer(){
-let cmdStr="node app.js" // 要运行的命令 
+let cmdStr="yarn install" // 要运行的命令 
 let serverPath=isDevelopment?"server":"../server" // 注意开发环境和线上环境的路径不同；
-// serverProcess=require('child_process').exec(cmdStr,{cwd:serverPath})
-// cmdStr='node app.js'
+
+serverProcess=require('child_process').exec(cmdStr,{cwd:serverPath})
+
+cmdStr='node app.js'
 runExec(cmdStr)
 
 function runExec(cmdStr){

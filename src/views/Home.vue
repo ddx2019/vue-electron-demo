@@ -7,7 +7,6 @@
         <left-nav></left-nav>
       </div>
       <div class="right-container">
-         <!-- <el-button type="primary" @click="getMusic">获取音乐</el-button> -->
         <router-view></router-view>
       </div>
    </div>
@@ -16,27 +15,16 @@
 <script>
 import LeftNav from "@/components/nav/LeftNav.vue"
 import NavHeader from '@/components/header'
-// import {HotMusic} from "@/api/api.js"
   export default {
     components:{
       LeftNav,
       NavHeader
-    },
-    methods:{
-      getMusic(){
-        // HotMusic()
-        // .then(res => {
-        //   console.log('res:',res)
-        // })
-        // .catch(err => {
-        //   console.log(err)
-        // })
-      }
     }
   }
 </script>
 <style lang="scss">
   .home{
+    background: #faf9f9;
    .main-content{
       display: flex;
       .left-container{
@@ -44,6 +32,9 @@ import NavHeader from '@/components/header'
       }
       .right-container{
         flex: auto;
+        padding:0px 30px 30px 30px;
+        max-width: 1200px;
+        margin: auto;
       }
    }
 

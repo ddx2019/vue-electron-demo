@@ -70,7 +70,7 @@ export default {
 </script>
 <style lang="scss">
 	.left-nav{
-		background: #f5f5f7;
+	   background: #f5f5f7;
 	   height: calc( 100vh  -  50px);
 		.nav-ul{	
 			background: #f5f5f7;

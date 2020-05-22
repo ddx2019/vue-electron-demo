@@ -7,6 +7,7 @@
 		@select="handleSelect"
 		text-color="#333"
 		active-text-color="#c22e2e"
+		background-color="#faf9f9"
 		:router="true"
 		>
 			<el-menu-item  v-for="(item,index) in navList" :index="item.path"  :key="index">{{item.name}}</el-menu-item>
