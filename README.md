@@ -2,6 +2,7 @@
 
 ## Project setup
 ```
+git clone https://github.com/ddx2019/vue-electron-demo.git
 yarn install
 ```
 
