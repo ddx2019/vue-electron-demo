@@ -12,7 +12,7 @@ protocol.registerSchemesAsPrivileged([{ scheme: 'app', privileges: { secure: tru
 
 function createWindow () {
   win = new BrowserWindow({
-    width: 1032,
+    width: 1034,
     height: 670,
     show:false, // 一开始是false,loadpage加载完毕的时候为true
     // frame:false,// 关闭window自带的关闭等功能以及工具栏， 无边框窗口是不允许拖动的，可通过设置样式让其可拖动，样式见index.html中

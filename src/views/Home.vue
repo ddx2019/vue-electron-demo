@@ -27,14 +27,14 @@ import NavHeader from '@/components/header'
     background: #faf9f9;
    .main-content{
       display: flex;
+      justify-content: space-between;
       .left-container{
-        width: 200px;
+        min-width: 200px;
       }
       .right-container{
         flex: auto;
-        padding:0px 30px 30px 30px;
         max-width: 1200px;
-        margin: auto;
+        margin: 0 auto;
       }
    }
 

@@ -101,7 +101,7 @@ export default{
 		margin:12px 20px 30px 0;
 		text-align: left;	
 	}
-	@media screen and (min-width: 1032px) { // 最大屏时
+	@media screen and (min-width: 1034px) { // 最大屏时
 		.recomend-card{
 			width: 200px;
 			.el-image{
@@ -110,7 +110,7 @@ export default{
 			}	
 		}
 	}
-	@media screen and (max-width: 1030px) { // 最小屏时
+	@media screen and (max-width: 1034px) { // 最小屏时
 		.recomend-card{
 			width:140px;
 			.el-image{
