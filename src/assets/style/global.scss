@@ -9,3 +9,12 @@
 ::-webkit-scrollbar-thumb{background:#e0e0e2;-webkit-transition:.3s;transition:.3s}
 ::-webkit-scrollbar-thumb:hover{background-color:#c0c0c2}
 ::-webkit-scrollbar-thumb:active{background-color:#c4c4c5}
+
+// 多行文本超出隐藏，显示两行
+.multiple-beyond-ellipsis{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
