@@ -26,20 +26,44 @@
           </div>
           <el-image :src="item.picUrl" alt="图片开小差了 ^_^" fit="fill" />
           <p class="img-title multiple-beyond-ellipsis">{{ item.name }}</p>
-		  <div class="play-icon el-icon-caret-right"></div>
+          <div class="play-icon el-icon-caret-right"></div>
         </div>
+      </li>
+    </ul>
+    <p class="common-font">
+      <span>独家放送</span>
+      <span class="see-more">更多></span>
+    </p>
+    <ul class="card-container">
+      <li
+        class="recomend-card exclusive-play"
+        v-for="item in exclusiveList"
+        :key="item.id"
+      >
+        <el-image
+          class="exclusive-img"
+          :src="item.picUrl"
+          alt="图片开小差了^_^"
+          fit="fill"
+        ></el-image>
+        <p class="img-title multiple-beyond-ellipsis">{{ item.name }}</p>
       </li>
     </ul>
   </div>
 </template>
 <script>
-import { RecomendList, recomendNewSong } from "@/apis/recomend.js";
+import {
+  RecomendList,
+  recomendNewSong,
+  privateContent
+} from "@/apis/recomend.js";
 export default {
   data() {
     return {
       active: "/",
       carouseList: [],
-      recomendList: []
+      recomendList: [],
+      exclusiveList: []
     };
   },
   methods: {
@@ -63,11 +87,22 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    getPrivateContent() {
+      privateContent()
+        .then(res => {
+          console.log("res", res);
+          this.exclusiveList = res.data.result;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
   mounted() {
     this.getNewSong();
     this.getRecomendList();
+    this.getPrivateContent();
   },
   filters: {
     numberFormat(val) {
@@ -129,7 +164,8 @@ export default {
       cursor: pointer;
       .card-item {
         position: relative;
-        .copy-writer,.play-count {
+        .copy-writer,
+        .play-count {
           position: absolute;
           z-index: 3;
           background: rgba(0, 0, 0, 0.3);
@@ -141,60 +177,75 @@ export default {
           width: 92%;
           margin: 0 auto;
           letter-spacing: 1px;
-		}
-		.play-count {
-			display: block;
-			text-align: right;
-		}
-		.play-icon{
-			color: #fff;
-			width: 24px;
-			height: 24px;
-			background: rgba(0,0,0,0.3);
-			border-radius: 50%;
-			position: absolute;
-			right: 6px;
-			text-align: center;
-			line-height: 24px;
-			border: 1px solid #fff;
-			display: none;
-			
-			&:hover{
-				background: rgba(0,0,0,0.5);
-			}
-		}
+        }
+        .play-count {
+          display: block;
+          text-align: right;
+        }
+        .play-icon {
+          color: #fff;
+          width: 24px;
+          height: 24px;
+          background: rgba(0, 0, 0, 0.3);
+          border-radius: 50%;
+          position: absolute;
+          right: 6px;
+          text-align: center;
+          line-height: 24px;
+          border: 1px solid #fff;
+          display: none;
+
+          &:hover {
+            background: rgba(0, 0, 0, 0.5);
+          }
+        }
       }
-      &:hover .copy-writer,  &:hover .play-icon{
+      &:hover .copy-writer,
+      &:hover .play-icon {
         display: block;
-	  }
-	  &:hover .play-count{
-		  display: none;
-	  }
+      }
+      &:hover .play-count {
+        display: none;
+      }
     }
   }
   @media screen and (min-width: 1035px) {
     // 最大屏时
     .recomend-card {
-	  width: 200px;
-	  .play-icon{
-		  top: 71%;
-	  }
+      width: 200px;
+      .play-icon {
+        top: 71%;
+      }
       .el-image {
         width: 200px;
         height: 200px;
+      }
+    }
+    .exclusive-play {
+      width: 338px;
+      .el-image {
+        width: 100%;
+        height: 188px;
       }
     }
   }
   @media screen and (max-width: 1034px) {
     // 最小屏时
     .recomend-card {
-	  width: 140px;
-	    .play-icon{
-		  top: 62%;
-	  }
+      width: 140px;
+      .play-icon {
+        top: 62%;
+      }
       .el-image {
         width: 140px;
         height: 140px;
+      }
+    }
+    .exclusive-play {
+      width: 250px;
+      .el-image {
+        width: 100%;
+        height: 156px;
       }
     }
   }

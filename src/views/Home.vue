@@ -33,7 +33,7 @@ import NavHeader from '@/components/header'
       }
       .right-container{
         flex: auto;
-        max-width: 1200px;
+        max-width: 1100px;
         margin: 0 auto;
       }
    }
