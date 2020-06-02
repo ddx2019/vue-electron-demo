@@ -1,6 +1,9 @@
 <template>
   <div class="personal-recomend">
     <top-nav @handleSelect="handleSelect" :active="active"></top-nav>
+    <h1 id="h1" v-if="false">不显示</h1>
+    <h2 id="h2">显示</h2>
+    <h3 id="h3" v-show="false">不显示</h3>
     <el-carousel :interval="4000" type="card" height="210px">
       <el-carousel-item v-for="item in carouseList" :key="item.id">
         <el-image
@@ -40,13 +43,16 @@
         v-for="item in exclusiveList"
         :key="item.id"
       >
-        <el-image
-          class="exclusive-img"
-          :src="item.picUrl"
-          alt="图片开小差了^_^"
-          fit="fill"
-        ></el-image>
-        <p class="img-title multiple-beyond-ellipsis">{{ item.name }}</p>
+       <div class="card-item">
+          <el-image
+            class="exclusive-img"
+            :src="item.picUrl"
+            alt="图片开小差了^_^"
+            fit="fill"
+          ></el-image>
+          <p class="img-title multiple-beyond-ellipsis">{{ item.name }}</p>
+          <div class="play-icon  el-icon-caret-right"></div>
+       </div>
       </li>
     </ul>
   </div>
@@ -91,7 +97,6 @@ export default {
     getPrivateContent() {
       privateContent()
         .then(res => {
-          console.log("res", res);
           this.exclusiveList = res.data.result;
         })
         .catch(err => {
@@ -103,6 +108,9 @@ export default {
     this.getNewSong();
     this.getRecomendList();
     this.getPrivateContent();
+    console.log('h1:',document.getElementById('h1'))
+    console.log('h2:',document.getElementById('h2'))
+    console.log('h3:',document.getElementById('h3'))
   },
   filters: {
     numberFormat(val) {
@@ -120,6 +128,9 @@ export default {
 };
 </script>
 <style lang="scss">
+#h2{
+  display: none;
+}
 .personal-recomend {
   .el-carousel {
     margin: 20px auto;

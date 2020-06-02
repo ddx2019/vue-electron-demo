@@ -1,7 +1,7 @@
 <template>
  <div class="home">
   
-    <nav-header></nav-header>
+   <nav-header></nav-header>
    <div class="main-content">
       <div class="left-container"> 
         <left-nav></left-nav>
