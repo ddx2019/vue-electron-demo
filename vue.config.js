@@ -3,13 +3,13 @@ module.exports = {
     pluginOptions: {
         electronBuilder: {
             builderOptions: {
-                'appId': 'myDemo.com',
-                'productName': 'myDemo', // 项目名，也是生成的安装文件名，即myDemo.exe
+                'appId': 'wyDemo.com',
+                'productName': 'wyDemo', // 项目名，也是生成的安装文件名，即wyDemo.exe
                 'copyright': 'ddx Copyright © 2020', // 版权信息
                 'files': [
                     './**/*'
                 ],
-                'extraFiles': [
+                'extraFiles': [ // 把指定的资源复制到程序根目录，即把server文件夹的内容复制到程序根目录，这里server文件夹下的内容相当于我的后台，我在background.js中有相应的处理。
                     './server'
                 ],
                 'directories': {
@@ -35,7 +35,7 @@ module.exports = {
                     'installerHeaderIcon': './favicon.ico', // 安装时头部图标
                     'createDesktopShortcut': true, // 创建桌面图标
                     'createStartMenuShortcut': true, // 创建开始菜单图标
-                    'shortcutName': 'myDemo' // 图标名称
+                    'shortcutName': 'wyDemo' // 图标名称(项目名称)
                 }
             }
         }
