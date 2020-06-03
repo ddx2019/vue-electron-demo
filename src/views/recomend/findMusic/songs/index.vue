@@ -1,6 +1,6 @@
 
 <template>
-	<div class="personal-recomend">
+	<div class="songs-container">
 		<top-nav @handleSelect="handleSelect" :active="active"></top-nav>
 		<h1>歌单</h1>
 	</div>

@@ -25,6 +25,7 @@ import NavHeader from '@/components/header'
 <style lang="scss">
   .home{
     background: #faf9f9;
+    min-height:100vh;
    .main-content{
       display: flex;
       justify-content: space-between;
@@ -35,6 +36,7 @@ import NavHeader from '@/components/header'
         flex: auto;
         max-width: 1100px;
         margin: 0 auto;
+        padding:50px;
       }
    }
 

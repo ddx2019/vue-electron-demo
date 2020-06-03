@@ -84,6 +84,9 @@ export default {
 </script>
 <style lang="scss">
    .header{
+      position: fixed;
+      width: 100%;
+      z-index: 100;
        .logo{
            border:1px  solid transparent;
            position: relative;

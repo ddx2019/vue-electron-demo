@@ -71,7 +71,11 @@ export default {
 <style lang="scss">
 	.left-nav{
 	   background: #f5f5f7;
-	   height: calc( 100vh  -  50px);
+	   height: calc( 100vh  -  47px);
+	   position: fixed;
+	   width:200px;
+	   top:47px;
+	   z-index: 100;
 		.nav-ul{	
 			background: #f5f5f7;
 			letter-spacing: 0.5px;

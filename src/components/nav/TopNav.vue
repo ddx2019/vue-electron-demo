@@ -41,14 +41,13 @@ export default {
 <style lang="scss">
 	.top-nav{
 		margin: 0 auto;
-		width: 90%;
+		// width: 90%;
 		.el-menu-nav{
 			display: flex;
 			justify-content: center;
 			.el-menu-item{
 				height: 44px;
-				line-height: 44px;
-				
+				line-height: 44px;		
 			}
 		}
 		
