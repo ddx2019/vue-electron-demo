@@ -3,7 +3,7 @@ module.exports = {
     pluginOptions: {
         electronBuilder: {
             builderOptions: {
-                'appId': 'wyDemo.com',
+                'appId': 'com.wyDemo', //包名,程序的唯一标识符
                 'productName': 'wyDemo', // 项目名，也是生成的安装文件名，即wyDemo.exe
                 'copyright': 'ddx Copyright © 2020', // 版权信息
                 'files': [
@@ -16,11 +16,11 @@ module.exports = {
                     'output': './dists' // 输出文件路径
                 },
                 'win': { // win相关配置
-                    'icon': './favicon.ico', // 图标，当前图标在根目录下，注意这里有两个坑
+                    'icon': './favicon.ico', // 图标，当前图标在根目录下，注意图标格式，保证图标存在；
                     "requestedExecutionLevel": "requireAdministrator", //获取管理员权限
                     'target': [{
                         'target': 'nsis', // 利用nsis制作安装程序
-                        'arch': [
+                        'arch': [ // 这个意思是打出来32 bit + 64 bit的包，但是这样打包出来的安装包体积比较大
                             'x64', // 64位
                             'ia32'
                         ]
