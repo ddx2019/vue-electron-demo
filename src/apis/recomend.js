@@ -1,6 +1,16 @@
 import axios from '@/plugins/axios.js'
 
-export function RecomendList(limit) {
+
+//主页
+
+export function mainBanner() { // banner
+    return axios({
+        url: '/banner',
+        method: 'post'
+    })
+}
+
+export function RecomendList(limit) { //推荐歌单
     return axios({
         url: '/personalized',
         method: 'post',
@@ -10,16 +20,16 @@ export function RecomendList(limit) {
     })
 }
 
-export function recomendNewSong() {
+export function privateContent() { //独家放送
     return axios({
-        url: '/personalized/newsong',
+        url: '/personalized/privatecontent',
         method: 'post'
     })
 }
 
-export function privateContent() {
+export function LatestMusic() { //最新音乐
     return axios({
-        url: '/personalized/privatecontent',
+        url: '/personalized/newsong',
         method: 'post'
     })
 }

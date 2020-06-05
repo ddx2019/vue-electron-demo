@@ -5,7 +5,7 @@
       <el-carousel-item v-for="item in carouseList" :key="item.id">
         <el-image
           class="carousel-img"
-          :src="item.picUrl"
+          :src="item.imageUrl"
           alt="图片开小差了 ^_^"
           fit="cover"
         />
@@ -26,7 +26,7 @@
           </div>
           <el-image :src="item.picUrl" alt="图片开小差了 ^_^" fit="fill" />
           <p class="img-title multiple-beyond-ellipsis">{{ item.name }}</p>
-          <div class="play-icon el-icon-caret-right"></div>
+          <div class="icon_common play-icon el-icon-caret-right"></div>
         </div>
       </li>
     </ul>
@@ -40,25 +40,49 @@
         v-for="item in exclusiveList"
         :key="item.id"
       >
-       <div class="card-item">
+        <div class="card-item">
           <el-image
             class="exclusive-img"
-            :src="item.picUrl"
+            :src="item.sPicUrl"
             alt="图片开小差了^_^"
             fit="fill"
           ></el-image>
           <p class="img-title multiple-beyond-ellipsis">{{ item.name }}</p>
-          <div class="play-icon  el-icon-caret-right"></div>
-       </div>
+          <div class="icon_common video-icon  el-icon-video-camera"></div>
+        </div>
       </li>
     </ul>
+    <p class="common-font">
+      <span>最新音乐</span>
+      <span class="see-more">更多></span>
+    </p>
+    <!-- <ul class="card-container latest-music">
+      <li class="latest-item" >
+        <div class="" v-for="(item,index) in latestList.slice(0,5)" :key="item.id">
+          <span class="serial-number">{{index|SerialNumLeft}}</span>
+          <el-image class="lastest-img" :src="item.picUrl" alt="图片开小差了^_^" fit="fill"></el-image>
+          <span>{{item.name}}</span>
+          <span>{{item.song.artists[0].name}}</span>
+        
+        </div>
+      </li>
+      <li class="latest-item">
+       <div  v-for="(item,index) in latestList.slice(5)" :key="item.id">
+        <span class="serial-number">{{index|SerialNumRight}}</span>
+        <el-image class="lastest-img" :src="item.picUrl" alt="图片开小差了^_^" fit="fill"></el-image>
+        <span>{{item.name}} </span> 
+        <span>{{item.song.artists[0].name}}</span>
+       </div>
+      </li>
+    </ul> -->
   </div>
 </template>
 <script>
 import {
   RecomendList,
-  recomendNewSong,
-  privateContent
+  mainBanner,
+  privateContent,
+  LatestMusic
 } from "@/apis/recomend.js";
 export default {
   data() {
@@ -66,17 +90,18 @@ export default {
       active: "/",
       carouseList: [],
       recomendList: [],
-      exclusiveList: []
+      exclusiveList: [],
+      latestList:[]
     };
   },
   methods: {
     handleSelect(key) {
       // this.active=key;
     },
-    getNewSong() {
-      recomendNewSong()
+    getMainBanner() {
+      mainBanner()
         .then(res => {
-          this.carouseList = res.data.result.slice(0, 9);
+          this.carouseList = res.data.banners.slice();
         })
         .catch(err => {
           console.log(err);
@@ -99,12 +124,22 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    getLatestMusic(){
+      LatestMusic()
+      .then(res => {
+        this.latestList=res.data.result;
+      })
+      .catch(err => {
+        console.log(err)
+      })
     }
   },
   mounted() {
-    this.getNewSong();
+    this.getMainBanner();
     this.getRecomendList();
     this.getPrivateContent();
+    this.getLatestMusic();
   },
   filters: {
     numberFormat(val) {
@@ -116,6 +151,16 @@ export default {
         const enums = parseInt(Math.log(val) / Math.log(number));
         const value = parseInt(val / Math.pow(number, enums));
         return value + unit[enums];
+      }
+    },
+    SerialNumLeft(index){
+      return '0'+(index+1);
+    },
+    SerialNumRight(index){
+      if(index<4){
+        return '0'+(index+6);
+      }else{
+        return index+6;
       }
     }
   }
@@ -150,12 +195,9 @@ export default {
   }
 
   .card-container {
-    list-style: none;
-    text-align: center;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-
     cursor: pointer;
     .img-title {
       font-size: 13px;
@@ -187,21 +229,13 @@ export default {
           text-align: right;
         }
         .play-icon {
-          color: #fff;
-          width: 24px;
-          height: 24px;
-          background: rgba(0, 0, 0, 0.3);
-          border-radius: 50%;
-          position: absolute;
-          right: 6px;
-          text-align: center;
-          line-height: 24px;
-          border: 1px solid #fff;
           display: none;
-
-          &:hover {
-            background: rgba(0, 0, 0, 0.5);
-          }
+          right: 6px;
+        }
+        .video-icon {
+          left: 6px;
+          top: 6px;
+          font-size: 13px;
         }
       }
       &:hover .copy-writer,
@@ -213,7 +247,36 @@ export default {
       }
     }
   }
+  .latest-music{
+    
+    .latest-item{
+      width: 48%;
+      border: 1px solid #eee;
+      height: 50px;
+      line-height: 50px;
+      div:nth-child(2n){
+        background: #eee
+      }
+      .serial-number{
+
+      }
+    }
+  }
  
+  .icon_common {
+    color: #fff;
+    width: 24px;
+    height: 24px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 24px;
+    border: 1px solid #fff;
+    position: absolute;
+    &:hover {
+      background: rgba(0, 0, 0, 0.5);
+    }
+  }
   @media screen and (min-width: 1123px) {
     // 最大屏时
     .recomend-card {
