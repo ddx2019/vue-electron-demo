@@ -54,3 +54,9 @@ import qs from 'qs';
     }
   }
 </script>
+<style lang="scss">
+  .upload-container{
+    width: 250px;
+    padding:150px;
+  }
+</style>
