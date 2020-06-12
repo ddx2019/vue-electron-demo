@@ -14,7 +14,7 @@ function createWindow() {
     win = new BrowserWindow({
         width: 1122,
         height: 670,
-        // resizable: false, //禁止改变主窗口尺寸
+        resizable: false, //禁止改变主窗口尺寸,设置过后，win.isMaximized()总是返回false
         show: false, // 一开始是false,loadpage加载完毕的时候为true
         frame: false, // 关闭window自带的关闭等功能以及工具栏， 无边框窗口是不允许拖动的，可通过设置样式让其可拖动，样式见index.html中
         webPreferences: {
@@ -30,8 +30,8 @@ function createWindow() {
             win.show();
             win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
         }, 5000);
-        // 开启渲染进程中的调试模式
-        if (!process.env.IS_TEST) win.webContents.openDevTools()
+        // 开启渲染进程中的调试模式 if (!process.env.IS_TEST) 
+        win.webContents.openDevTools({ detach: false })
     } else {
         setTimeout(() => {
             loading.hide();
@@ -79,11 +79,14 @@ ipcMain.on('window-min', function() { // 收到渲染进程的窗口最小化操
 })
 
 // 窗口 最大化、恢复
-ipcMain.on('window-max', function() {
-    if (win.isMaximized()) {
-        win.restore();
-    } else {
+ipcMain.on('window-max', function(event, obj) {
+    console.log(111111, obj.winFlag)
+        //通过 resizable: false 设置了禁止改变主窗口尺寸,设置过后，win.isMaximized()总是返回false,故此处不再用它判断。 win.restore();也失效
+    if (obj.winFlag) { // val为 true 则调用最大化函数
         win.maximize();
+    } else {
+        win.setContentSize(1122, 670); //重新设置窗口客户端的宽高值（例如网页界面）,这里win.setSize(x,y)并不生效。
+        win.center(); // 窗口居中
     }
 })
 

@@ -1,42 +1,39 @@
 <template>
-  <div class="header">
+  <div class="header ele_drag">
       <!-- <el-button @click="openEx">打开百度</el-button> -->
     <el-row>
       <el-col :span="4" >
         <span class="logo" @click="goHome">
-            <img src="@/assets/image/wangyiyun.svg">
-            <span>网易云音乐</span>
+            <img  class="no_drag" src="@/assets/image/wangyiyun.svg">
+            <span class="no_drag">网易云音乐</span>
         </span>
       </el-col>
-
       <el-col :span="7" >
         <div class="search_outside">
-         <span class="el-icon-arrow-left arrow" :class="{' arrow_active':arrow}" @click="handleClickArrow('left')"></span>
-         <span class="el-icon-arrow-right arrow" :class="{' arrow_active':!arrow}" @click="handleClickArrow('right')"></span>
-         <input ref="search" class="search_input"  v-model="searchKey" type="text" @focus="handleFocus" @blur="handleBlur"/>
-         <i class="el-icon-search"></i>
+         <span class="el-icon-arrow-left arrow no_drag" :class="{' arrow_active':arrow}" @click="handleClickArrow('left')"></span>
+         <span class="el-icon-arrow-right arrow no_drag" :class="{' arrow_active':!arrow}" @click="handleClickArrow('right')"></span>
+         <input ref="search" class="search_input no_drag"  v-model="searchKey" type="text" @focus="handleFocus" @blur="handleBlur"/>
+         <i class="el-icon-search no_drag"></i>
         </div>
       </el-col>
       <el-col :span="13">
-        <div class="personal_outside" >
-            <i class="el-icon-user"></i>
-            <span class="text_loginstatus">未登录</span>
-            <span class="el-icon-caret-bottom"></span>
-            <span class="text_VIP" >开通VIP</span>
-            <span class="el-icon-shopping-bag-2"></span>
-            <span class="el-icon-message"></span>
-            <span class="el-icon-setting"></span>
+        <div class="personal_outside">
+            <i class="el-icon-user no_drag"></i>
+            <span class="text_loginstatus no_drag">未登录</span>
+            <span class="el-icon-caret-bottom no_drag"></span>
+            <span class="text_VIP no_drag" >开通VIP</span>
+            <span class="el-icon-shopping-bag-2 no_drag"></span>
+            <span class="el-icon-message no_drag"></span>
+            <span class="el-icon-setting no_drag"></span>
             <strong>|</strong>
-            <span class="el-icon-edit-outline"></span>
-            <span class="el-icon-minus" @click="minimizeWin"></span>
-            <span class="el-icon-full-screen" @click="maximizeWin"></span>
-            <span class="el-icon-close" @click="closeWin"></span>
+            <span class="el-icon-edit-outline no_drag"></span>
+            <span class="el-icon-minus no_drag" @click="minimizeWin"></span>
+            <span class="el-icon-full-screen no_drag" @click="maximizeWin"></span>
+            <span class="el-icon-close no_drag" @click="closeWin"></span>
         </div>
       </el-col>
-    </el-row>
-  
+    </el-row> 
   </div>
-
 </template>
 <script>
 import {ipcRenderer, shell} from 'electron';
@@ -44,7 +41,8 @@ export default {
   data () {
     return {
       searchKey: '搜索音乐，视频，歌词，电台',
-      arrow:true
+      arrow:true,
+      winFlag:false
     }
   },
   methods: {
@@ -70,7 +68,8 @@ export default {
       ipcRenderer.send('window-min') // 通知主进程我要进行窗口最小化操作
     },
     maximizeWin(){
-      ipcRenderer.send('window-max')
+      this.winFlag=!this.winFlag;
+      ipcRenderer.send('window-max',{winFlag:this.winFlag})
     },
     closeWin(){
       ipcRenderer.send('window-close')
@@ -149,6 +148,7 @@ export default {
       i{
         margin-left: -28px;
         font-size: 13px;
+        cursor: pointer;
       }
 
     }
@@ -164,7 +164,8 @@ export default {
         background: #eee;
         text-align: center;
         vertical-align: middle;
-         color: rgb(204, 204, 204);
+        color: rgb(204, 204, 204);
+        cursor: pointer;
         
       }
       span{

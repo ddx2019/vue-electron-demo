@@ -56,25 +56,28 @@
       <span>最新音乐</span>
       <span class="see-more">更多></span>
     </p>
-    <!-- <ul class="card-container latest-music">
+    <ul class="card-container latest-music">
       <li class="latest-item" >
         <div class="" v-for="(item,index) in latestList.slice(0,5)" :key="item.id">
           <span class="serial-number">{{index|SerialNumLeft}}</span>
           <el-image class="lastest-img" :src="item.picUrl" alt="图片开小差了^_^" fit="fill"></el-image>
-          <span>{{item.name}}</span>
-          <span>{{item.song.artists[0].name}}</span>
-        
+          <div class="name-desc">
+            <span class="song-name">{{item.name}} </span> 
+            <span class="author-name">{{item.song.artists[0].name}}</span>
+          </div>
         </div>
       </li>
       <li class="latest-item">
        <div  v-for="(item,index) in latestList.slice(5)" :key="item.id">
         <span class="serial-number">{{index|SerialNumRight}}</span>
         <el-image class="lastest-img" :src="item.picUrl" alt="图片开小差了^_^" fit="fill"></el-image>
-        <span>{{item.name}} </span> 
-        <span>{{item.song.artists[0].name}}</span>
+        <div class="name-desc">
+          <span class="song-name">{{item.name}} </span> 
+          <span class="author-name">{{item.song.artists[0].name}}</span>
+        </div>
        </div>
       </li>
-    </ul> -->
+    </ul>
   </div>
 </template>
 <script>
@@ -253,11 +256,25 @@ export default {
       width: 48%;
       border: 1px solid #eee;
       height: 50px;
-      line-height: 50px;
       div:nth-child(2n){
         background: #eee
       }
       .serial-number{
+        font-size: 12px;
+        color:rgb(197, 194, 194);
+      }
+      .lastest-img{
+        width: 40px;
+      }
+    }
+    .name-desc{
+      span{
+        font-size: 14px;
+      }
+      .song-name{
+        
+      }
+      .author-name{
 
       }
     }
