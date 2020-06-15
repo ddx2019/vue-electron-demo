@@ -33,3 +33,17 @@ export function LatestMusic() { //最新音乐
         method: 'post'
     })
 }
+
+export function RecommendMV() { // 推荐MV
+    return axios({
+        url: '/personalized/mv',
+        method: 'post'
+    })
+}
+
+export function AnchorStation() { // 主播电台 ，接口待测
+    return axios({
+        url: '/dj/hot',
+        method: 'post'
+    })
+}

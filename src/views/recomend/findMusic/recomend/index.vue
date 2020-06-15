@@ -75,8 +75,12 @@
             <span class="song-name">{{ item.name }} </span>
             <span class="SQ_icon">SQ</span>
             <span class="square_icon el-icon-caret-right"></span>
-            <span  v-if="item.song.artists.length>1" class="author-name">{{item.song.artists[0].name+' / '+item.song.artists[1].name}}</span>  
-            <span v-else class="author-name">{{item.song.artists[0].name}}</span>
+            <span v-if="item.song.artists.length > 1" class="author-name">{{
+              item.song.artists[0].name + " / " + item.song.artists[1].name
+            }}</span>
+            <span v-else class="author-name">{{
+              item.song.artists[0].name
+            }}</span>
           </div>
         </div>
       </li>
@@ -98,13 +102,64 @@
             <span class="song-name">{{ item.name }} </span>
             <span class="SQ_icon">SQ</span>
             <span class="square_icon el-icon-caret-right"></span>
-            <span  v-if="item.song.artists.length>1" class="author-name">{{item.song.artists[0].name+' / '+item.song.artists[1].name}}</span>  
-            <span v-else class="author-name">{{item.song.artists[0].name}}</span>
-           
+            <span v-if="item.song.artists.length > 1" class="author-name">{{
+              item.song.artists[0].name + " / " + item.song.artists[1].name
+            }}</span>
+            <span v-else class="author-name">{{
+              item.song.artists[0].name
+            }}</span>
           </div>
         </div>
       </li>
     </ul>
+    <p class="common-font">
+      <span>推荐MV</span>
+      <span class="see-more">更多></span>
+    </p>
+    <ul class="card-container">
+      <li
+        class="recomend-card exclusive-play"
+        v-for="item in MvList"
+        :key="item.id"
+      >
+        <div class="card-item">
+          <div class="copy-writer multiple-beyond-ellipsis" style="width:96%;">
+            {{ item.copywriter }}
+          </div>
+          <div class="play-count multiple-beyond-ellipsis" style="width:96%;">
+            <span class="el-icon-video-camera"></span>
+            {{ item.playCount }}
+          </div>
+          <el-image
+            :src="item.picUrl"
+            alt="图片开小差了 ^_^"
+            fit="fill"
+            class="exclusive-img"
+          />
+          <p class="img-title multiple-beyond-ellipsis">{{ item.name }}</p>
+          <p class="artist-name ">{{ item.artistName }}</p>
+        </div>
+      </li>
+    </ul>
+    <p class="common-font">
+      <span>主播电台</span>
+      <span class="see-more">更多></span>
+    </p>
+    <!-- <ul class="card-container">
+      <li class="recomend-card" v-for="item in stationList" :key="item.id">
+        <div class="card-item">
+          <div class="copy-writer multiple-beyond-ellipsis">
+            {{ item.copywriter }}
+          </div>
+          <div class="play-count multiple-beyond-ellipsis">
+            {{ item.playCount | numberFormat }}
+          </div>
+          <el-image :src="item.picUrl" alt="图片开小差了 ^_^" fit="fill" />
+          <p class="img-title multiple-beyond-ellipsis">{{ item.name }}</p>
+          <div class="icon_common play-icon el-icon-caret-right"></div>
+        </div>
+      </li>
+    </ul> -->
   </div>
 </template>
 <script>
@@ -112,7 +167,9 @@ import {
   RecomendList,
   mainBanner,
   privateContent,
-  LatestMusic
+  LatestMusic,
+  RecommendMV,
+  AnchorStation
 } from "@/apis/recomend.js";
 export default {
   data() {
@@ -121,7 +178,9 @@ export default {
       carouseList: [],
       recomendList: [],
       exclusiveList: [],
-      latestList: []
+      latestList: [],
+      MvList: [],
+      stationList:[]
     };
   },
   methods: {
@@ -163,6 +222,24 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    getRecomendMV() {
+      RecommendMV()
+        .then(res => {
+          this.MvList = res.data.result.slice(0, 3);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getAnchorStation(){
+      AnchorStation()
+        .then(res => {
+          this.stationList = res.data.djRadios;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
   mounted() {
@@ -170,6 +247,8 @@ export default {
     this.getRecomendList();
     this.getPrivateContent();
     this.getLatestMusic();
+    this.getRecomendMV();
+    // this.getAnchorStation();
   },
   filters: {
     numberFormat(val) {
@@ -278,8 +357,9 @@ export default {
     }
   }
   .latest-music {
+    margin-bottom: 50px;
     .latest-item {
-      flex:1;
+      flex: 1;
       border: 1px solid #eee;
       margin-top: 12px;
       .item_card {
@@ -304,7 +384,7 @@ export default {
       .serial-number {
         font-size: 12px;
         color: rgb(150, 149, 149);
-        padding:0 13px 0 13px;
+        padding: 0 13px 0 13px;
         letter-spacing: 1px;
       }
     }
@@ -313,7 +393,7 @@ export default {
       vertical-align: top;
       margin-left: 12px;
       font-size: 12px;
-      letter-spacing: 2px;;
+      letter-spacing: 2px;
       .song-name {
         display: block;
       }
@@ -321,32 +401,38 @@ export default {
         color: rgb(192, 191, 191);
       }
     }
-   .icon_latest{
+    .icon_latest {
       width: 20px;
       height: 20px;
       line-height: 20px;
-      left:50px;
+      left: 50px;
       z-index: 100;
-   }
-   .square_icon{
-     border:1px solid #c62f2f;
-     color: #c62f2f;
-     text-align: center;
-     padding-left: 2px;
-     width:13px;
-     height: 11px;
-     border-radius: 2px;
-     margin: 6px 10px 0 10px;
-   }
-   .SQ_icon{
-     border:1px solid #fe672e;
-     color: #fe672e;
-     font-size: 12px;
-     letter-spacing: 0px;
-     font-family: serif,monospace;
-     transform: scale(0.1);
-     padding: 1px 2px 1px 1px;
-   }
+    }
+    .square_icon {
+      border: 1px solid #c62f2f;
+      color: #c62f2f;
+      text-align: center;
+      padding-left: 2px;
+      width: 13px;
+      height: 11px;
+      border-radius: 2px;
+      margin: 6px 10px 0 10px;
+    }
+    .SQ_icon {
+      border: 1px solid #fe672e;
+      color: #fe672e;
+      font-size: 12px;
+      letter-spacing: 0px;
+      font-family: serif, monospace;
+      transform: scale(0.1);
+      padding: 1px 2px 1px 1px;
+    }
+  }
+
+  .artist-name {
+    font-size: 12px;
+    color: #969595;
+    padding-top: 5px;
   }
 
   .icon_common {
