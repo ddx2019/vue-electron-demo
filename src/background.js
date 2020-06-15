@@ -31,7 +31,8 @@ function createWindow() {
             win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
         }, 5000);
         // 开启渲染进程中的调试模式 if (!process.env.IS_TEST) 
-        win.webContents.openDevTools({ detach: false })
+        win.webContents.openDevTools(); // 打开调试模式
+        // win.webContents.closeDevTools(); // 关闭调试模式
     } else {
         setTimeout(() => {
             loading.hide();
@@ -40,6 +41,7 @@ function createWindow() {
             createProtocol('app');
             win.loadURL('app://./index.html')
         }, 5000);
+        win.webContents.closeDevTools(); // 关闭调试模式
     }
 
     win.on('closed', () => {

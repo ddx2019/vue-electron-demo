@@ -57,25 +57,52 @@
       <span class="see-more">更多></span>
     </p>
     <ul class="card-container latest-music">
-      <li class="latest-item" >
-        <div class="" v-for="(item,index) in latestList.slice(0,5)" :key="item.id">
-          <span class="serial-number">{{index|SerialNumLeft}}</span>
-          <el-image class="lastest-img" :src="item.picUrl" alt="图片开小差了^_^" fit="fill"></el-image>
+      <li class="latest-item">
+        <div
+          class="item_card"
+          v-for="(item, index) in latestList.slice(0, 5)"
+          :key="item.id"
+        >
+          <span class="serial-number">{{ index | SerialNumLeft }}</span>
+          <div class="icon_common icon_latest el-icon-caret-right"></div>
+          <el-image
+            class="lastest-img"
+            :src="item.picUrl"
+            alt="图片开小差了^_^"
+            fit="fill"
+          ></el-image>
           <div class="name-desc">
-            <span class="song-name">{{item.name}} </span> 
-            <span class="author-name">{{item.song.artists[0].name}}</span>
+            <span class="song-name">{{ item.name }} </span>
+            <span class="SQ_icon">SQ</span>
+            <span class="square_icon el-icon-caret-right"></span>
+            <span  v-if="item.song.artists.length>1" class="author-name">{{item.song.artists[0].name+' / '+item.song.artists[1].name}}</span>  
+            <span v-else class="author-name">{{item.song.artists[0].name}}</span>
           </div>
         </div>
       </li>
       <li class="latest-item">
-       <div  v-for="(item,index) in latestList.slice(5)" :key="item.id">
-        <span class="serial-number">{{index|SerialNumRight}}</span>
-        <el-image class="lastest-img" :src="item.picUrl" alt="图片开小差了^_^" fit="fill"></el-image>
-        <div class="name-desc">
-          <span class="song-name">{{item.name}} </span> 
-          <span class="author-name">{{item.song.artists[0].name}}</span>
+        <div
+          class="item_card"
+          v-for="(item, index) in latestList.slice(5)"
+          :key="item.id"
+        >
+          <span class="serial-number">{{ index | SerialNumRight }}</span>
+          <div class="icon_common icon_latest el-icon-caret-right"></div>
+          <el-image
+            class="lastest-img"
+            :src="item.picUrl"
+            alt="图片开小差了^_^"
+            fit="fill"
+          ></el-image>
+          <div class="name-desc">
+            <span class="song-name">{{ item.name }} </span>
+            <span class="SQ_icon">SQ</span>
+            <span class="square_icon el-icon-caret-right"></span>
+            <span  v-if="item.song.artists.length>1" class="author-name">{{item.song.artists[0].name+' / '+item.song.artists[1].name}}</span>  
+            <span v-else class="author-name">{{item.song.artists[0].name}}</span>
+           
+          </div>
         </div>
-       </div>
       </li>
     </ul>
   </div>
@@ -94,7 +121,7 @@ export default {
       carouseList: [],
       recomendList: [],
       exclusiveList: [],
-      latestList:[]
+      latestList: []
     };
   },
   methods: {
@@ -128,14 +155,14 @@ export default {
           console.log(err);
         });
     },
-    getLatestMusic(){
+    getLatestMusic() {
       LatestMusic()
-      .then(res => {
-        this.latestList=res.data.result;
-      })
-      .catch(err => {
-        console.log(err)
-      })
+        .then(res => {
+          this.latestList = res.data.result;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
   mounted() {
@@ -156,14 +183,14 @@ export default {
         return value + unit[enums];
       }
     },
-    SerialNumLeft(index){
-      return '0'+(index+1);
+    SerialNumLeft(index) {
+      return "0" + (index + 1);
     },
-    SerialNumRight(index){
-      if(index<4){
-        return '0'+(index+6);
-      }else{
-        return index+6;
+    SerialNumRight(index) {
+      if (index < 4) {
+        return "0" + (index + 6);
+      } else {
+        return index + 6;
       }
     }
   }
@@ -250,36 +277,78 @@ export default {
       }
     }
   }
-  .latest-music{
-    
-    .latest-item{
-      width: 48%;
+  .latest-music {
+    .latest-item {
+      flex:1;
       border: 1px solid #eee;
-      height: 50px;
-      div:nth-child(2n){
-        background: #eee
+      margin-top: 12px;
+      .item_card {
+        height: 60px;
+        //让图片在card 居中
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        position: relative;
+        &:nth-child(2n) {
+          background: rgb(243, 243, 243);
+        }
+        &:hover {
+          background: #ebeced;
+        }
       }
-      .serial-number{
-        font-size: 12px;
-        color:rgb(197, 194, 194);
-      }
-      .lastest-img{
+      .lastest-img {
         width: 40px;
+        border: 1px solid rgb(226, 226, 226);
       }
-    }
-    .name-desc{
-      span{
-        font-size: 14px;
-      }
-      .song-name{
-        
-      }
-      .author-name{
 
+      .serial-number {
+        font-size: 12px;
+        color: rgb(150, 149, 149);
+        padding:0 13px 0 13px;
+        letter-spacing: 1px;
       }
     }
+    .name-desc {
+      display: inline-block;
+      vertical-align: top;
+      margin-left: 12px;
+      font-size: 12px;
+      letter-spacing: 2px;;
+      .song-name {
+        display: block;
+      }
+      .author-name {
+        color: rgb(192, 191, 191);
+      }
+    }
+   .icon_latest{
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      left:50px;
+      z-index: 100;
+   }
+   .square_icon{
+     border:1px solid #c62f2f;
+     color: #c62f2f;
+     text-align: center;
+     padding-left: 2px;
+     width:13px;
+     height: 11px;
+     border-radius: 2px;
+     margin: 6px 10px 0 10px;
+   }
+   .SQ_icon{
+     border:1px solid #fe672e;
+     color: #fe672e;
+     font-size: 12px;
+     letter-spacing: 0px;
+     font-family: serif,monospace;
+     transform: scale(0.1);
+     padding: 1px 2px 1px 1px;
+   }
   }
- 
+
   .icon_common {
     color: #fff;
     width: 24px;
