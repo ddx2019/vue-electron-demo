@@ -41,9 +41,29 @@ export function RecommendMV() { // 推荐MV
     })
 }
 
-export function AnchorStation() { // 主播电台 ，接口待测
+export function AnchorStation() { // 主播电台 (推荐电台）
+    return axios({
+        url: '/personalized/djprogram',
+        method: 'post'
+    })
+}
+
+export function djHot(limit) { //听听， 热门电台
     return axios({
         url: '/dj/hot',
-        method: 'post'
+        method: 'post',
+        data: {
+            limit: limit
+        }
+    })
+}
+
+export function wangyiMV(limit) { // 看看,  网易出品 mv
+    return axios({
+        url: '/mv/exclusive/rcmd',
+        method: 'post',
+        data: {
+            limit: limit
+        }
     })
 }

@@ -145,21 +145,50 @@
       <span>主播电台</span>
       <span class="see-more">更多></span>
     </p>
-    <!-- <ul class="card-container">
-      <li class="recomend-card" v-for="item in stationList" :key="item.id">
+    <ul class="card-container">
+      <li class="recomend-card anchor-card" v-for="item in stationList" :key="item.id">
         <div class="card-item">
           <div class="copy-writer multiple-beyond-ellipsis">
             {{ item.copywriter }}
           </div>
-          <div class="play-count multiple-beyond-ellipsis">
-            {{ item.playCount | numberFormat }}
+          <el-image :src="item.picUrl" alt="图片开小差了 ^_^" fit="fill" />
+          <p class="img-title multiple-beyond-ellipsis">{{ item.name }}</p>
+          <!-- <div class="icon_common play-icon el-icon-caret-right"></div> -->
+        </div>
+      </li>
+    </ul>
+    <p class="common-font">
+      <span>听听</span>
+      <span class="see-more">更多></span>
+    </p>
+    <ul class="card-container">
+      <li class="recomend-card" v-for="item in djHotList" :key="item.id">
+        <div class="card-item">
+          <div class="copy-writer multiple-beyond-ellipsis">
+            {{ item.copywriter }}
           </div>
           <el-image :src="item.picUrl" alt="图片开小差了 ^_^" fit="fill" />
           <p class="img-title multiple-beyond-ellipsis">{{ item.name }}</p>
-          <div class="icon_common play-icon el-icon-caret-right"></div>
+          <!-- <div class="icon_common play-icon el-icon-caret-right"></div> -->
         </div>
       </li>
-    </ul> -->
+    </ul>
+    <p class="common-font">
+      <span>看看</span>
+      <span class="see-more">更多></span>
+    </p>
+    <ul class="card-container">
+      <li class="recomend-card" v-for="item in wangyiMVList" :key="item.id">
+        <div class="card-item">
+          <div class="copy-writer multiple-beyond-ellipsis">
+            {{ item.artistName }}
+          </div>
+          <el-image :src="item.cover" alt="图片开小差了 ^_^" fit="fill" />
+          <p class="img-title multiple-beyond-ellipsis">{{ item.name }}</p>
+          <!-- <div class="icon_common play-icon el-icon-caret-right"></div> -->
+        </div>
+      </li>
+    </ul>
   </div>
 </template>
 <script>
@@ -169,7 +198,9 @@ import {
   privateContent,
   LatestMusic,
   RecommendMV,
-  AnchorStation
+  AnchorStation,
+  djHot,
+  wangyiMV
 } from "@/apis/recomend.js";
 export default {
   data() {
@@ -180,7 +211,10 @@ export default {
       exclusiveList: [],
       latestList: [],
       MvList: [],
-      stationList:[]
+      stationList:[],
+      djHotList:[],
+      wangyiMVList:[],
+      limit:5
     };
   },
   methods: {
@@ -235,11 +269,30 @@ export default {
     getAnchorStation(){
       AnchorStation()
         .then(res => {
-          this.stationList = res.data.djRadios;
+          this.stationList = res.data.result;
+         
         })
         .catch(err => {
           console.log(err);
         });
+    },
+    getdjHot(){
+      djHot(this.limit)
+      .then(res => {
+        this.djHotList=res.data.djRadios;
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
+    getwangyiMV(){
+      wangyiMV(this.limit)
+      .then(res => {
+        this.wangyiMVList=res.data.data;
+      })
+      .catch(err => {
+        console.log(err)
+      })
     }
   },
   mounted() {
@@ -248,7 +301,9 @@ export default {
     this.getPrivateContent();
     this.getLatestMusic();
     this.getRecomendMV();
-    // this.getAnchorStation();
+    this.getAnchorStation();
+    this.getwangyiMV();
+    this.getdjHot();
   },
   filters: {
     numberFormat(val) {
@@ -461,6 +516,13 @@ export default {
         height: 200px;
       }
     }
+    .anchor-card{
+      width:160px;
+        .el-image{
+          width:160px;
+          height: 160px;
+        }
+      }
     .exclusive-play {
       width: 338px;
       .el-image {
@@ -481,6 +543,13 @@ export default {
         height: 140px;
       }
     }
+    .anchor-card{
+      width:120px;
+        .el-image{
+          width:120px;
+          height: 120px;
+        }
+      }
     .exclusive-play {
       width: 250px;
       .el-image {
