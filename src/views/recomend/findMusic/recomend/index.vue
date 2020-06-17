@@ -1,13 +1,14 @@
 <template>
   <div class="personal-recomend">
     <top-nav @handleSelect="handleSelect" :active="active"></top-nav>
-    <el-carousel :interval="4000" type="card" height="200px">
+    <el-carousel :interval="4000" type="card" height="200px" width="500px">
       <el-carousel-item v-for="item in carouseList" :key="item.id">
         <el-image
           class="carousel-img"
           :src="item.imageUrl"
           alt="图片开小差了 ^_^"
           fit="cover"
+          @click="handleClickBanner(item.targetId)"
         />
       </el-carousel-item>
     </el-carousel>
@@ -189,6 +190,9 @@
         </div>
       </li>
     </ul>
+    <audio :src="songUrl" autoplay >
+    您的浏览器不支持 audio 标签。
+    </audio>
   </div>
 </template>
 <script>
@@ -200,7 +204,8 @@ import {
   RecommendMV,
   AnchorStation,
   djHot,
-  wangyiMV
+  wangyiMV,
+  songURL
 } from "@/apis/recomend.js";
 export default {
   data() {
@@ -214,7 +219,8 @@ export default {
       stationList:[],
       djHotList:[],
       wangyiMVList:[],
-      limit:5
+      limit:5,
+      songUrl:''
     };
   },
   methods: {
@@ -293,17 +299,30 @@ export default {
       .catch(err => {
         console.log(err)
       })
+    },
+    handleClickBanner(id){
+      if(id!==0){
+        songURL(id)
+        .then(res => {
+          this.songUrl=res.data.data[0].url;
+          // console.log( this.songUrl[0].url)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
+     
     }
   },
   mounted() {
     this.getMainBanner();
-    this.getRecomendList();
-    this.getPrivateContent();
-    this.getLatestMusic();
-    this.getRecomendMV();
-    this.getAnchorStation();
-    this.getwangyiMV();
-    this.getdjHot();
+    // this.getRecomendList();
+    // this.getPrivateContent();
+    // this.getLatestMusic();
+    // this.getRecomendMV();
+    // this.getAnchorStation();
+    // this.getwangyiMV();
+    // this.getdjHot();
   },
   filters: {
     numberFormat(val) {
@@ -336,9 +355,15 @@ export default {
     margin: 20px auto;
   }
   .carousel-img {
-    width: auto;
+    width: 500px;
     height: 200px;
   }
+
+  // 重写banner样式
+  .el-carousel__item--card {
+    width:500px;
+  }
+  
   .common-font {
     display: flex;
     justify-content: space-between;
@@ -357,7 +382,6 @@ export default {
       cursor: pointer;
     }
   }
-
   .card-container {
     display: flex;
     flex-wrap: wrap;

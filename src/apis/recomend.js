@@ -67,3 +67,13 @@ export function wangyiMV(limit) { // 看看,  网易出品 mv
         }
     })
 }
+
+export function songURL(id) {
+    return axios({
+        url: '/song/url',
+        method: 'post',
+        data: {
+            id: id
+        }
+    })
+}
