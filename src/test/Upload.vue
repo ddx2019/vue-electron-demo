@@ -32,18 +32,21 @@ import qs from 'qs';
         console.log(file);
       },
       BeforeUpload(file){
-        this.newFile.append('file',file);
-        console.log(this.newFile.get('file'))
+       if(file){
+          this.newFile.append('file',file);
+       }else{
+         return false;
+       }
       },
       Upload(){
         const newData= this.newFile;
         axios({
           url:'https://jsonplaceholder.typicode.com/posts/',
           method:'post',
-          data:newData
-          // headers:{
-          // 'Content-Type':'multipart/form-data'
-          //  }
+          data: newData,
+          headers:{
+          'Content-Type':'multipart/form-data'
+          }
         })
         .then(res => {
           console.log('res:',res)

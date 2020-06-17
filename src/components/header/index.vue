@@ -85,7 +85,7 @@ export default {
    .header{
       position: fixed;
       width: 100%;
-      z-index: 100;
+      z-index: 1000;
        .logo{
            border:1px  solid transparent;
            position: relative;
@@ -107,7 +107,7 @@ export default {
            }
        }
       .el-row {
-          padding: 10px;
+          padding:12px 14px 12px 10px;
           background: #c62f2f;
           color: #fff;
      }
