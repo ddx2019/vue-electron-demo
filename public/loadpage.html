@@ -1,137 +1,119 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE>
+<html>
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <style>
-        .dots {
-            width: 3.5em;
-            display: flex;
-            flex-flow: row nowrap;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .loading-dots {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        .dots div {
-            width: 0.4em;
-            height: 0.4em;
-            border-radius: 50%;
-            background-color: #666666;
-            animation: fade 0.8s ease-in-out alternate infinite;
-        }
-
-        .dots div:nth-of-type(1) {
-            animation-delay: -1.2s;
-        }
-
-        .dots div:nth-of-type(2) {
-            animation-delay: -1s;
-        }
-
-        .dots div:nth-of-type(3) {
-            animation-delay: -0.8s;
-        }
-
-        .dots div:nth-of-type(4) {
-            animation-delay: -0.6s;
-        }
-
-        .dots div:nth-of-type(5) {
-            animation-delay: -0.4s;
-        }
-
-        .dots div:nth-of-type(6) {
-            animation-delay: -0.2s;
-        }
-
-        @keyframes fade {
-            from {
-                opacity: 1;
-            }
-
-            to {
-                opacity: 0;
-            }
-        }
-
-        .electron-loading {
+    <style scoped>
+        /* 水平垂直居中 于窗口 */
+        .loadpage-loading {
             width: 360px;
             height: 360px;
             position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            margin: auto auto;
-
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
         }
 
-        .electron-logos {
+        .loading_bg {
+            background: url('./loading/loadbg.png') no-repeat;
+            background-size: contain;
+            height: 240px;
+        }
+
+        .loading-logo {
             width: 100px;
             height: 100px;
-
+            position: absolute;
+            left:8%;
+            top:8%;
         }
 
-        .electron-logos img {
+        .loading-logo>img {
             width: 100%;
             height: 100%;
         }
-
-        .electron-warps-hei {
-            height: 240px;
-            background: url("./loading/loadbg.png") no-repeat;
-            background-size: contain;
+        .loading-context p{
+            font-size: 18px;
+            position: absolute;
+            left:37%;
+            color: #333;
         }
-
-        .electron-warps {
+        .loading-context p:nth-of-type(1){
+            top:30%;
+            letter-spacing: 2px;
+        }
+        .loading-context p:nth-of-type(2){
+            top:40%;
+            font-size: 16px;
+        }
+        .common-position{
+            position: absolute;
+            left:50%;
+            transform:translateX(-50%);
+        }
+        .loading-dots{
+            width: 70px;
             display: flex;
-            justify-content: center;
-            padding-top: 42px;
+            justify-content: space-between;
+            align-items: center;
         }
-
-        .electron-fonts::before {
-            content: "";
-            height: 85px;
-            display: inline-block;
+        .loading-dots div{
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: #666666;
+            animation:dotsLoding 0.8s ease-in-out alternate infinite;
         }
-
-        .vae {
-            margin-bottom: 8px;
+        .loading-dots div:nth-of-type(6){
+            animation-delay: -0.2s;
         }
-        .cpy{
-            font-size:12px;
+        .loading-dots div:nth-of-type(5){
+            animation-delay: -0.4s;
+        }
+        .loading-dots div:nth-of-type(4){
+            animation-delay:  -0.6s;
+        }
+        .loading-dots div:nth-of-type(3){
+            animation-delay: -0.8s;
+        }
+        .loading-dots div:nth-of-type(2){
+            animation-delay: -1s;
+        }
+        .loading-dots div:nth-of-type(1){
+            animation-delay: -1.2s;
+        }
+        @keyframes dotsLoding{
+            from{
+                opacity: 1;
+            }
+            to{
+                opacity: 0;
+            }
+        }
+        .copy-right{
+            font-size: 13px;
             text-align: center;
             width: 100%;
             bottom: 18px;
+            letter-spacing: 1px;
+            color: rgb(94, 92, 92);
         }
     </style>
 </head>
 
 <body>
-    <div class="electron-loading">
-        <div class="electron-warps-hei">
-            <div class="electron-warps">
-               
-                <div class="electron-logos">
-                    <img src="./loading/wyy.png">
-                </div>
-                
-                <div class="electron-fonts">
-                    <div class="vae">网易云音乐</div>
-                    <div>NetEase Cloud Music</div>
-                </div>
+    <div class="loadpage-loading">
+        <div class="loading_bg">
+            <div class="loading-logo"><img src="./loading/wyy.png" alt="图片开小差了^_^"></div>
+            <div class="loading-context">
+                <p>网易云音乐</p>
+                <p>NetEase Cloud Music</p>
             </div>
         </div>
-
-        <!-- 加载loading界面 -->
-        <div class="loading-dots">
-            <div class="dots">
+        <div class="common-position">
+            <div class="loading-dots">
                 <div></div>
                 <div></div>
                 <div></div>
@@ -140,9 +122,8 @@
                 <div></div>
             </div>
         </div>
-
         <!-- 版权所有 -->
-        <div class="cpy loading-dots">Copyright  @ddx All rights reserved</div>
+        <div class="copy-right common-position">Copyright @ddx All rights reserved</div>
     </div>
 </body>
 

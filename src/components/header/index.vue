@@ -1,81 +1,87 @@
 <template>
   <div class="header ele_drag">
-      <!-- <el-button @click="openEx">打开百度</el-button> -->
+    <!-- <el-button @click="openEx">打开百度</el-button> -->
     <el-row>
-      <el-col :span="4" >
+      <el-col :span="4">
         <span class="logo" @click="goHome">
-            <img  class="no_drag" src="@/assets/image/wangyiyun.svg">
-            <span class="no_drag">网易云音乐</span>
+          <img class="no_drag" src="@/assets/image/wangyiyun.svg">
+          <span class="no_drag">网易云音乐</span>
         </span>
       </el-col>
-      <el-col :span="7" >
+      <el-col :span="7">
         <div class="search_outside">
-         <span class="el-icon-arrow-left arrow no_drag" :class="{' arrow_active':arrow}" @click="handleClickArrow('left')"></span>
-         <span class="el-icon-arrow-right arrow no_drag" :class="{' arrow_active':!arrow}" @click="handleClickArrow('right')"></span>
-         <input ref="search" class="search_input no_drag"  v-model="searchKey" type="text" @focus="handleFocus" @blur="handleBlur"/>
-         <i class="el-icon-search no_drag"></i>
+          <span class="el-icon-arrow-left arrow no_drag" :class="{' arrow_active':arrow}" @click="handleClickArrow('left')" />
+          <span class="el-icon-arrow-right arrow no_drag" :class="{' arrow_active':!arrow}" @click="handleClickArrow('right')" />
+          <input ref="search" v-model="searchKey" class="search_input no_drag" type="text" @focus="handleFocus" @blur="handleBlur">
+          <i class="el-icon-search no_drag" />
         </div>
       </el-col>
       <el-col :span="13">
         <div class="personal_outside">
-            <i class="el-icon-user no_drag"></i>
-            <span class="text_loginstatus no_drag">未登录</span>
-            <span class="el-icon-caret-bottom no_drag"></span>
-            <span class="text_VIP no_drag" >开通VIP</span>
-            <span class="el-icon-shopping-bag-2 no_drag"></span>
-            <span class="el-icon-message no_drag"></span>
-            <span class="el-icon-setting no_drag"></span>
-            <strong>|</strong>
-            <span class="el-icon-edit-outline no_drag"></span>
-            <span class="el-icon-minus no_drag" @click="minimizeWin"></span>
-            <span class="el-icon-full-screen no_drag" @click="maximizeWin"></span>
-            <span class="el-icon-close no_drag" @click="closeWin"></span>
+          <i class="el-icon-user no_drag" />
+          <span class="text_loginstatus no_drag">未登录</span>
+          <span class="el-icon-caret-bottom no_drag" />
+          <span class="text_VIP no_drag">开通VIP</span>
+          <span class="el-icon-shopping-bag-2 no_drag" />
+          <span class="el-icon-message no_drag" @click="handleClickSendMsg" />
+          <span class="el-icon-setting no_drag" />
+          <strong>|</strong>
+          <span class="el-icon-edit-outline no_drag" />
+          <span class="el-icon-minus no_drag" @click="minimizeWin" />
+          <span class="el-icon-full-screen no_drag" @click="maximizeWin" />
+          <span class="el-icon-close no_drag" @click="closeWin" />
         </div>
       </el-col>
-    </el-row> 
+    </el-row>
   </div>
 </template>
 <script>
-import {ipcRenderer, shell} from 'electron';
+import { ipcRenderer, shell } from 'electron'
 export default {
-  data () {
+  data() {
     return {
       searchKey: '搜索音乐，视频，歌词，电台',
-      arrow:true,
-      winFlag:false
+      arrow: true,
+      winFlag: false
     }
   },
   methods: {
-    goHome(){
+    goHome() {
     // location.reload();
-     this.$router.push({path:'/'})
-
+      this.$router.push({ path: '/' })
     },
-    handleFocus () {
+    handleFocus() {
       this.searchKey = ''
     },
-    handleBlur () {
+    handleBlur() {
       this.searchKey = '搜索音乐，视频，歌词，电台'
     },
-    handleClickArrow(arg){
-      if(arg==='left'){
-        this.arrow=true;
-      }else{
-        this.arrow=false;
+    handleClickArrow(arg) {
+      if (arg === 'left') {
+        this.arrow = true
+      } else {
+        this.arrow = false
       }
     },
-    minimizeWin(){
+    minimizeWin() {
       ipcRenderer.send('window-min') // 通知主进程我要进行窗口最小化操作
     },
-    maximizeWin(){
-      this.winFlag=!this.winFlag;
-      ipcRenderer.send('window-max',{winFlag:this.winFlag})
+    maximizeWin() {
+      this.winFlag = !this.winFlag
+      ipcRenderer.send('window-max', { winFlag: this.winFlag })
     },
-    closeWin(){
+    closeWin() {
       ipcRenderer.send('window-close')
     },
-    openEx(){
+    openEx() {
       shell.openExternal('https://www.baidu.com')
+    },
+    handleClickSendMsg() {
+      ipcRenderer.send('have-message')
+      console.log('给主进程 发送消息')
+      // 这里可放一个音频文件
+      /* const audio=new Audio('audio的路径');
+        audio.play(); */
     }
 
   }
@@ -166,7 +172,7 @@ export default {
         vertical-align: middle;
         color: rgb(204, 204, 204);
         cursor: pointer;
-        
+
       }
       span{
         font-size: 16px;

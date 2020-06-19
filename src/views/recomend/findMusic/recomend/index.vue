@@ -1,6 +1,6 @@
 <template>
   <div class="personal-recomend">
-    <top-nav @handleSelect="handleSelect" :active="active"></top-nav>
+    <top-nav :active="active" @handleSelect="handleSelect" />
     <el-carousel :interval="4000" type="card" height="200px" width="500px">
       <el-carousel-item v-for="item in carouseList" :key="item.id">
         <el-image
@@ -8,7 +8,7 @@
           :src="item.imageUrl"
           alt="图片开小差了 ^_^"
           fit="cover"
-          @click="handleClickBanner(item.targetId)"
+          @click="handleClickBanner(item)"
         />
       </el-carousel-item>
     </el-carousel>
@@ -17,7 +17,7 @@
       <span class="see-more">更多></span>
     </p>
     <ul class="card-container">
-      <li class="recomend-card" v-for="item in recomendList" :key="item.id">
+      <li v-for="item in recomendList" :key="item.id" class="recomend-card">
         <div class="card-item">
           <div class="copy-writer multiple-beyond-ellipsis">
             {{ item.copywriter }}
@@ -27,7 +27,7 @@
           </div>
           <el-image :src="item.picUrl" alt="图片开小差了 ^_^" fit="fill" />
           <p class="img-title multiple-beyond-ellipsis">{{ item.name }}</p>
-          <div class="icon_common play-icon el-icon-caret-right"></div>
+          <div class="icon_common play-icon el-icon-caret-right" />
         </div>
       </li>
     </ul>
@@ -37,9 +37,9 @@
     </p>
     <ul class="card-container">
       <li
-        class="recomend-card exclusive-play"
         v-for="item in exclusiveList"
         :key="item.id"
+        class="recomend-card exclusive-play"
       >
         <div class="card-item">
           <el-image
@@ -47,9 +47,9 @@
             :src="item.sPicUrl"
             alt="图片开小差了^_^"
             fit="fill"
-          ></el-image>
+          />
           <p class="img-title multiple-beyond-ellipsis">{{ item.name }}</p>
-          <div class="icon_common video-icon  el-icon-video-camera"></div>
+          <div class="icon_common video-icon  el-icon-video-camera" />
         </div>
       </li>
     </ul>
@@ -60,22 +60,22 @@
     <ul class="card-container latest-music">
       <li class="latest-item">
         <div
-          class="item_card"
           v-for="(item, index) in latestList.slice(0, 5)"
           :key="item.id"
+          class="item_card"
         >
           <span class="serial-number">{{ index | SerialNumLeft }}</span>
-          <div class="icon_common icon_latest el-icon-caret-right"></div>
+          <div class="icon_common icon_latest el-icon-caret-right" />
           <el-image
             class="lastest-img"
             :src="item.picUrl"
             alt="图片开小差了^_^"
             fit="fill"
-          ></el-image>
+          />
           <div class="name-desc">
             <span class="song-name">{{ item.name }} </span>
             <span class="SQ_icon">SQ</span>
-            <span class="square_icon el-icon-caret-right"></span>
+            <span class="square_icon el-icon-caret-right" />
             <span v-if="item.song.artists.length > 1" class="author-name">{{
               item.song.artists[0].name + " / " + item.song.artists[1].name
             }}</span>
@@ -87,22 +87,22 @@
       </li>
       <li class="latest-item">
         <div
-          class="item_card"
           v-for="(item, index) in latestList.slice(5)"
           :key="item.id"
+          class="item_card"
         >
           <span class="serial-number">{{ index | SerialNumRight }}</span>
-          <div class="icon_common icon_latest el-icon-caret-right"></div>
+          <div class="icon_common icon_latest el-icon-caret-right" />
           <el-image
             class="lastest-img"
             :src="item.picUrl"
             alt="图片开小差了^_^"
             fit="fill"
-          ></el-image>
+          />
           <div class="name-desc">
             <span class="song-name">{{ item.name }} </span>
             <span class="SQ_icon">SQ</span>
-            <span class="square_icon el-icon-caret-right"></span>
+            <span class="square_icon el-icon-caret-right" />
             <span v-if="item.song.artists.length > 1" class="author-name">{{
               item.song.artists[0].name + " / " + item.song.artists[1].name
             }}</span>
@@ -119,16 +119,16 @@
     </p>
     <ul class="card-container">
       <li
-        class="recomend-card exclusive-play"
         v-for="item in MvList"
         :key="item.id"
+        class="recomend-card exclusive-play"
       >
         <div class="card-item">
           <div class="copy-writer multiple-beyond-ellipsis" style="width:96%;">
             {{ item.copywriter }}
           </div>
           <div class="play-count multiple-beyond-ellipsis" style="width:96%;">
-            <span class="el-icon-video-camera"></span>
+            <span class="el-icon-video-camera" />
             {{ item.playCount }}
           </div>
           <el-image
@@ -147,7 +147,7 @@
       <span class="see-more">更多></span>
     </p>
     <ul class="card-container">
-      <li class="recomend-card anchor-card" v-for="item in stationList" :key="item.id">
+      <li v-for="item in stationList" :key="item.id" class="recomend-card anchor-card">
         <div class="card-item">
           <div class="copy-writer multiple-beyond-ellipsis">
             {{ item.copywriter }}
@@ -163,7 +163,7 @@
       <span class="see-more">更多></span>
     </p>
     <ul class="card-container">
-      <li class="recomend-card" v-for="item in djHotList" :key="item.id">
+      <li v-for="item in djHotList" :key="item.id" class="recomend-card">
         <div class="card-item">
           <div class="copy-writer multiple-beyond-ellipsis">
             {{ item.copywriter }}
@@ -179,7 +179,7 @@
       <span class="see-more">更多></span>
     </p>
     <ul class="card-container">
-      <li class="recomend-card" v-for="item in wangyiMVList" :key="item.id">
+      <li v-for="item in wangyiMVList" :key="item.id" class="recomend-card">
         <div class="card-item">
           <div class="copy-writer multiple-beyond-ellipsis">
             {{ item.artistName }}
@@ -190,9 +190,9 @@
         </div>
       </li>
     </ul>
-    <audio :src="songUrl" autoplay >
+    <!-- <audio :src="songUrl" autoplay >
     您的浏览器不支持 audio 标签。
-    </audio>
+    </audio> -->
   </div>
 </template>
 <script>
@@ -205,23 +205,58 @@ import {
   AnchorStation,
   djHot,
   wangyiMV,
-  songURL
-} from "@/apis/recomend.js";
+  songURL,
+  RelatedPlaylist
+} from '@/apis/recomend.js'
 export default {
+  filters: {
+    numberFormat(val) {
+      const number = 10000
+      const unit = ['', '万', '亿', '万亿']
+      if (val < number) {
+        return val
+      } else {
+        const enums = parseInt(Math.log(val) / Math.log(number))
+        const value = parseInt(val / Math.pow(number, enums))
+        return value + unit[enums]
+      }
+    },
+    SerialNumLeft(index) {
+      return '0' + (index + 1)
+    },
+    SerialNumRight(index) {
+      if (index < 4) {
+        return '0' + (index + 6)
+      } else {
+        return index + 6
+      }
+    }
+  },
   data() {
     return {
-      active: "/",
+      active: '/',
       carouseList: [],
       recomendList: [],
       exclusiveList: [],
       latestList: [],
       MvList: [],
-      stationList:[],
-      djHotList:[],
-      wangyiMVList:[],
-      limit:5,
-      songUrl:''
-    };
+      stationList: [],
+      djHotList: [],
+      wangyiMVList: [],
+      limit: 5,
+      songUrl: '',
+      relatedPList: []
+    }
+  },
+  mounted() {
+    this.getMainBanner()
+    this.getRecomendList()
+    this.getPrivateContent()
+    this.getLatestMusic()
+    this.getRecomendMV()
+    this.getAnchorStation()
+    this.getwangyiMV()
+    this.getdjHot()
   },
   methods: {
     handleSelect(key) {
@@ -230,124 +265,100 @@ export default {
     getMainBanner() {
       mainBanner()
         .then(res => {
-          this.carouseList = res.data.banners.slice();
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    getRecomendList() {
-      RecomendList(10)
-        .then(res => {
-          this.recomendList = res.data.result.slice();
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    getPrivateContent() {
-      privateContent()
-        .then(res => {
-          this.exclusiveList = res.data.result;
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    getLatestMusic() {
-      LatestMusic()
-        .then(res => {
-          this.latestList = res.data.result;
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    getRecomendMV() {
-      RecommendMV()
-        .then(res => {
-          this.MvList = res.data.result.slice(0, 3);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    getAnchorStation(){
-      AnchorStation()
-        .then(res => {
-          this.stationList = res.data.result;
-         
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    getdjHot(){
-      djHot(this.limit)
-      .then(res => {
-        this.djHotList=res.data.djRadios;
-      })
-      .catch(err => {
-        console.log(err)
-      })
-    },
-    getwangyiMV(){
-      wangyiMV(this.limit)
-      .then(res => {
-        this.wangyiMVList=res.data.data;
-      })
-      .catch(err => {
-        console.log(err)
-      })
-    },
-    handleClickBanner(id){
-      if(id!==0){
-        songURL(id)
-        .then(res => {
-          this.songUrl=res.data.data[0].url;
-          // console.log( this.songUrl[0].url)
+          this.carouseList = res.data.banners.slice()
         })
         .catch(err => {
           console.log(err)
         })
-      }
-     
-    }
-  },
-  mounted() {
-    this.getMainBanner();
-    // this.getRecomendList();
-    // this.getPrivateContent();
-    // this.getLatestMusic();
-    // this.getRecomendMV();
-    // this.getAnchorStation();
-    // this.getwangyiMV();
-    // this.getdjHot();
-  },
-  filters: {
-    numberFormat(val) {
-      const number = 10000;
-      const unit = ["", "万", "亿", "万亿"];
-      if (val < number) {
-        return val;
+    },
+    getRecomendList() {
+      RecomendList(10)
+        .then(res => {
+          this.recomendList = res.data.result.slice()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    getPrivateContent() {
+      privateContent()
+        .then(res => {
+          this.exclusiveList = res.data.result
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    getLatestMusic() {
+      LatestMusic()
+        .then(res => {
+          this.latestList = res.data.result
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    getRecomendMV() {
+      RecommendMV()
+        .then(res => {
+          this.MvList = res.data.result.slice(0, 3)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    getAnchorStation() {
+      AnchorStation()
+        .then(res => {
+          this.stationList = res.data.result
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    getdjHot() {
+      djHot(this.limit)
+        .then(res => {
+          this.djHotList = res.data.djRadios
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    getwangyiMV() {
+      wangyiMV(this.limit)
+        .then(res => {
+          this.wangyiMVList = res.data.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    handleClickBanner(item) {
+      if (item.targetId !== 0) {
+        songURL(item.targetId)
+          .then(res => {
+            this.songUrl = res.data.data[0].url
+            this.getRelatedPlaylist(item.targetType)// 相关歌单
+          })
+          .catch(err => {
+            console.log(err)
+          })
       } else {
-        const enums = parseInt(Math.log(val) / Math.log(number));
-        const value = parseInt(val / Math.pow(number, enums));
-        return value + unit[enums];
+        window.open(item.url)
       }
     },
-    SerialNumLeft(index) {
-      return "0" + (index + 1);
-    },
-    SerialNumRight(index) {
-      if (index < 4) {
-        return "0" + (index + 6);
-      } else {
-        return index + 6;
-      }
+    getRelatedPlaylist(id) {
+      RelatedPlaylist(id)
+        .then(res => {
+          this.relatedPList = res.data.result
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
-};
+}
 </script>
 <style lang="scss">
 .personal-recomend {
@@ -363,7 +374,7 @@ export default {
   .el-carousel__item--card {
     width:500px;
   }
-  
+
   .common-font {
     display: flex;
     justify-content: space-between;

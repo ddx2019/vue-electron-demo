@@ -1,25 +1,25 @@
 <template>
-  <div class="home" >
-    <nav-header></nav-header>
-    <div class="main-content" >
+  <div class="home">
+    <nav-header />
+    <div class="main-content">
       <div class="left-container">
-        <left-nav></left-nav>
+        <left-nav />
       </div>
       <div class="right-container">
-        <router-view></router-view>  
+        <router-view />
       </div>
     </div>
   </div>
 </template>
 <script>
-import LeftNav from "@/components/nav/LeftNav.vue";
-import NavHeader from "@/components/header";
+import LeftNav from '@/components/nav/LeftNav.vue'
+import NavHeader from '@/components/header'
 export default {
   components: {
     LeftNav,
     NavHeader
   }
-};
+}
 </script>
 <style lang="scss">
 html{
