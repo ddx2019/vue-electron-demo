@@ -9,15 +9,18 @@
         <router-view />
       </div>
     </div>
+    <nav-footer />
   </div>
 </template>
 <script>
 import LeftNav from '@/components/nav/LeftNav.vue'
 import NavHeader from '@/components/header'
+import NavFooter from '@/components/footer'
 export default {
   components: {
     LeftNav,
-    NavHeader
+    NavHeader,
+    NavFooter
   }
 }
 </script>

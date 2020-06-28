@@ -1,11 +1,15 @@
 <template>
   <div class="footer">
-    <div>top</div>
-    <div>bottom</div>
+    <h1>top</h1>
+    <h2>bottom</h2>
+    <div class="el-icon-fa-wechat" />
   </div>
 </template>
 <style lang="scss">
 .footer{
-    background: lightyellow;
+    width:100%;
+   position:fixed;
+   bottom:0;
+   z-index:1000;
 }
 </style>
