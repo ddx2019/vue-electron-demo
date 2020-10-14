@@ -1,27 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <title><%= htmlWebpackPlugin.options.title %></title>
 
     <style>
       /* 默认情况下, 无框窗口是 non-draggable 的,即不能拖动，故需设置  -webkit-app-region: drag; 以允许窗口拖动;*/
-      body{
+      body {
         /* -webkit-app-region: drag; */
       }
       /* 请注意, 如果您已使整个窗口draggable, 则必须将按钮等有点击事件的元素 ，标记为 non-draggable, 否则用户将无法单击它们 */
-      span,button,i,li,input,el-carousel{
+      span,
+      button,
+      i,
+      li,
+      input,
+      el-carousel {
         /* -webkit-app-region: no-drag;  */
       }
     </style>
-
   </head>
-  <body >
+  <body>
     <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong
+        >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
+        properly without JavaScript enabled. Please enable it to
+        continue.</strong
+      >
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
